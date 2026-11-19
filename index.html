@@ -1,0 +1,3555 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#090d16" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="BIST & ABD Canlı" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="manifest.json" />
+  <title>BIST & ABD Canlı Borsa, Döviz, Altın & Fon</title>
+  <style>
+    :root {
+      --bg-primary: #090d16;
+      --bg-secondary: #111827;
+      --bg-card: #161f33;
+      --bg-elevated: #1c2740;
+      --border-color: #25334d;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent: #3b82f6;
+      --indigo: #6366f1;
+      --green: #10b981;
+      --green-bg: rgba(16, 185, 129, 0.16);
+      --red: #ef4444;
+      --red-bg: rgba(239, 68, 68, 0.16);
+      --amber: #f59e0b;
+      --gold: #fbbf24;
+      --nav-height: 64px;
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-top: env(safe-area-inset-top, 0px);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.38;
+      min-height: 100vh;
+      overscroll-behavior-y: contain;
+    }
+
+    input, select, button {
+      font-family: inherit;
+    }
+
+    /* ================= LOGIN SCREEN ================= */
+    #login-screen {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: calc(20px + var(--safe-top)) 20px calc(24px + var(--safe-bottom));
+      background: radial-gradient(circle at top, #1e293b 0%, #090d16 70%);
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 22px;
+      padding: 28px 22px;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+    }
+
+    .app-icon-large {
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--accent), var(--indigo));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 18px;
+      color: #fff;
+      margin: 0 auto 14px;
+      box-shadow: 0 8px 20px rgba(59, 130, 246, 0.35);
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .login-header h1 {
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .login-header p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    .field-group {
+      margin-bottom: 14px;
+    }
+
+    .field-group label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .input-mobile {
+      width: 100%;
+      height: 44px;
+      padding: 0 12px;
+      border-radius: 11px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .input-mobile:focus {
+      border-color: var(--accent);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      min-height: 42px;
+      padding: 0 13px;
+      border-radius: 11px;
+      border: none;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.1s, opacity 0.15s;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-success {
+      background: var(--green);
+      color: #052e16;
+    }
+
+    .btn-danger {
+      background: var(--red-bg);
+      color: var(--red);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+    }
+
+    .btn-outline {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-sm {
+      min-height: 34px;
+      padding: 0 9px;
+      font-size: 12px;
+      border-radius: 8px;
+    }
+
+    .error-banner {
+      background: var(--red-bg);
+      color: var(--red);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      margin-bottom: 14px;
+      text-align: center;
+      display: none;
+    }
+
+    /* ================= APP SHELL ================= */
+    #app-shell {
+      display: none;
+      padding-bottom: calc(var(--nav-height) + var(--safe-bottom) + 16px);
+    }
+
+    .mobile-header {
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      background: rgba(17, 24, 39, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      padding: calc(8px + var(--safe-top)) 12px 8px;
+    }
+
+    .header-row {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      min-width: 0;
+    }
+
+    .mini-logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, var(--accent), var(--indigo));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 11.5px;
+      flex-shrink: 0;
+    }
+
+    .header-titles {
+      min-width: 0;
+    }
+
+    .header-titles h1 {
+      font-size: 15px;
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .live-meta {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      flex-shrink: 0;
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    .refresh-btn {
+      min-height: 35px;
+      padding: 0 11px;
+      border-radius: 9px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      font-size: 12.5px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .refresh-btn:active {
+      transform: scale(0.95);
+    }
+
+    .spin {
+      display: inline-block;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    .view-container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 10px 11px 10px;
+    }
+
+    .tab-view {
+      display: none;
+    }
+
+    .tab-view.active {
+      display: block;
+    }
+
+    /* ================= HOME TAB SECTIONS (COMPACT & SLEEK) ================= */
+    .section-heading {
+      font-size: 11.5px;
+      font-weight: 800;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.35px;
+      margin: 2px 2px 5px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* COMPACT TOP GROUP DAILY CHANGE BANNER ON HOME SCREEN */
+    .home-groups-box {
+      background: linear-gradient(135deg, #17233c 0%, #121a2d 100%);
+      border: 1px solid #2b3c5e;
+      border-radius: 12px;
+      padding: 7px 8px;
+      margin-bottom: 10px;
+    }
+
+    .home-group-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 9px;
+      background: rgba(9, 13, 22, 0.65);
+      border: 1px solid rgba(37, 51, 77, 0.85);
+      border-radius: 8px;
+      margin-bottom: 4px;
+      cursor: pointer;
+      gap: 8px;
+    }
+
+    .home-group-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .home-group-row:active {
+      border-color: var(--accent);
+    }
+
+    /* COMPACT INDICES & FX / GOLD GRIDS */
+    .ticker-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+      margin-bottom: 10px;
+    }
+
+    .ticker-grid-fx {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+      margin-bottom: 10px;
+    }
+
+    @media (min-width: 640px) {
+      .ticker-grid-fx {
+        grid-template-columns: repeat(5, 1fr);
+      }
+    }
+
+    .mini-market-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 6px 7px;
+      cursor: pointer;
+      transition: border-color 0.15s;
+      min-width: 0;
+    }
+
+    .mini-market-card:active {
+      border-color: var(--accent);
+    }
+
+    .mmc-title {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .mmc-val {
+      font-size: 12px;
+      font-weight: 800;
+      color: #fff;
+      margin: 2px 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .mmc-pct {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 1px 5px;
+      border-radius: 5px;
+    }
+
+    /* ================= KPI STRIP ================= */
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 7px;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 520px) {
+      .kpi-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 11px;
+      padding: 8px 10px;
+    }
+
+    .kpi-label {
+      font-size: 10.5px;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .kpi-val {
+      font-size: 16px;
+      font-weight: 800;
+      margin-top: 1px;
+    }
+
+    /* SEARCH & FILTER BAR */
+    .search-filter-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 13px;
+      padding: 9px;
+      margin-bottom: 10px;
+    }
+
+    .search-row {
+      display: flex;
+      gap: 7px;
+      margin-bottom: 8px;
+    }
+
+    .search-input {
+      flex: 1;
+      height: 40px;
+      padding: 0 11px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      font-size: 14px;
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent);
+    }
+
+    .sector-select {
+      max-width: 130px;
+      height: 40px;
+      padding: 0 7px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      font-size: 12px;
+      outline: none;
+    }
+
+    .chip-scroll {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 2px;
+    }
+
+    .chip-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .chip {
+      padding: 5px 11px;
+      border-radius: 999px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+      font-size: 11.5px;
+      font-weight: 700;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .chip.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    /* MOBILE STOCK LIST */
+    .stock-list {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 13px;
+      overflow: hidden;
+    }
+
+    .stock-list-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 11px;
+      background: #131b2e;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-secondary);
+    }
+
+    .sort-triggers {
+      display: flex;
+      gap: 7px;
+    }
+
+    .sort-triggers span {
+      cursor: pointer;
+      padding: 2px 5px;
+      border-radius: 5px;
+    }
+
+    .sort-triggers span.active-sort {
+      color: var(--accent);
+      background: rgba(59, 130, 246, 0.14);
+    }
+
+    .stock-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 11px;
+      border-bottom: 1px solid rgba(37, 51, 77, 0.55);
+      gap: 8px;
+    }
+
+    .stock-row:last-child {
+      border-bottom: none;
+    }
+
+    .stock-row-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .star-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-secondary);
+      color: var(--text-muted);
+      font-size: 17px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .star-btn.active {
+      color: var(--gold);
+      border-color: rgba(251, 191, 36, 0.45);
+      background: rgba(251, 191, 36, 0.1);
+    }
+
+    .stock-info {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .stock-code-line {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .ticker {
+      font-weight: 800;
+      font-size: 14px;
+      color: #fff;
+      letter-spacing: 0.2px;
+    }
+
+    .market-pill {
+      font-size: 9.5px;
+      font-weight: 800;
+      padding: 1px 5px;
+      border-radius: 4px;
+      background: rgba(99, 102, 241, 0.2);
+      color: #a5b4fc;
+    }
+
+    .market-pill.bist {
+      background: rgba(59, 130, 246, 0.18);
+      color: #93c5fd;
+    }
+
+    .sector-mini {
+      font-size: 10px;
+      color: var(--text-muted);
+      background: var(--bg-secondary);
+      padding: 1px 5px;
+      border-radius: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 90px;
+    }
+
+    .manual-tag {
+      font-size: 9.5px;
+      color: var(--amber);
+      background: rgba(245, 158, 11, 0.15);
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+
+    .company-sub {
+      font-size: 11.5px;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 1px;
+    }
+
+    .stock-row-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .price-block {
+      text-align: right;
+      cursor: pointer;
+      padding: 2px 4px;
+      border-radius: 6px;
+    }
+
+    .price-block:active {
+      background: rgba(59, 130, 246, 0.18);
+    }
+
+    .price-val {
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .diff-sub {
+      font-size: 10.5px;
+      color: var(--text-secondary);
+    }
+
+    .pct-badge {
+      min-width: 68px;
+      padding: 5px 7px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 800;
+      text-align: right;
+    }
+
+    .up {
+      color: var(--green);
+      background: var(--green-bg);
+    }
+
+    .down {
+      color: var(--red);
+      background: var(--red-bg);
+    }
+
+    .flat {
+      color: var(--text-secondary);
+      background: rgba(148, 163, 184, 0.14);
+    }
+
+    .add-grp-mini {
+      width: 31px;
+      height: 32px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-secondary);
+      color: var(--accent);
+      font-size: 17px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .flash-up {
+      animation: flashGreen 0.8s ease;
+    }
+
+    .flash-down {
+      animation: flashRed 0.8s ease;
+    }
+
+    @keyframes flashGreen {
+      0% { background-color: rgba(16, 185, 129, 0.3); }
+      100% { background-color: transparent; }
+    }
+
+    @keyframes flashRed {
+      0% { background-color: rgba(239, 68, 68, 0.3); }
+      100% { background-color: transparent; }
+    }
+
+    /* ================= GROUPS / FUND TAB ================= */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 15px;
+      padding: 13px;
+      margin-bottom: 12px;
+    }
+
+    .card-header-title {
+      font-size: 14.5px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* ALL CREATED GROUPS VISIBLE AT ONCE WITHOUT HORIZONTAL SCROLL */
+    .group-pills-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 7px;
+      margin-bottom: 12px;
+    }
+
+    @media (min-width: 600px) {
+      .group-pills-row {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .group-chip {
+      padding: 8px 10px;
+      border-radius: 11px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      cursor: pointer;
+      text-align: left;
+      min-width: 0;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .group-chip.active {
+      border-color: var(--accent);
+      background: rgba(59, 130, 246, 0.18);
+      box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.35);
+    }
+
+    .group-chip-name {
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .group-chip-sub {
+      font-size: 11.5px;
+      font-weight: 800;
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+    }
+
+    .fund-hero {
+      background: linear-gradient(135deg, #16223b 0%, #111827 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 13px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+
+    .fund-hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .balance-control-panel {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(37, 51, 77, 0.8);
+    }
+
+    .custom-delta-row {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .balance-step-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      margin-top: 7px;
+    }
+
+    .step-btn {
+      height: 34px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      font-size: 11.5px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .step-btn:active {
+      transform: scale(0.95);
+    }
+
+    .step-btn.plus {
+      color: var(--green);
+      border-color: rgba(16, 185, 129, 0.35);
+    }
+
+    .step-btn.minus {
+      color: var(--red);
+      border-color: rgba(239, 68, 68, 0.35);
+    }
+
+    /* ADD STOCK AUTOCOMPLETE & PRESET CHIPS */
+    .add-stock-box {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 12px;
+      position: relative;
+    }
+
+    .stock-suggestions-list {
+      background: #0f172a;
+      border: 1px solid var(--accent);
+      border-radius: 10px;
+      margin-top: 6px;
+      margin-bottom: 8px;
+      max-height: 185px;
+      overflow-y: auto;
+      display: none;
+    }
+
+    .suggestion-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      border-bottom: 1px solid rgba(37, 51, 77, 0.65);
+      cursor: pointer;
+      gap: 8px;
+    }
+
+    .suggestion-item:last-child {
+      border-bottom: none;
+    }
+
+    .suggestion-item:active {
+      background: rgba(59, 130, 246, 0.22);
+    }
+
+    .preset-pct-row {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .preset-pct-btn {
+      padding: 5px 9px;
+      border-radius: 7px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-primary);
+      color: #93c5fd;
+      font-size: 11.5px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .preset-pct-btn:active {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    /* HOLDING CARD WITH HIGH-VISIBILITY PERCENTAGE & EASY EDITING */
+    .holding-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 11px;
+      margin-bottom: 9px;
+    }
+
+    .holding-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 7px;
+    }
+
+    .holding-weight-pill {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(59, 130, 246, 0.22);
+      color: #93c5fd;
+      border: 1px solid rgba(59, 130, 246, 0.45);
+      font-size: 13px;
+      font-weight: 900;
+      padding: 1px 8px;
+      border-radius: 7px;
+      margin-left: 5px;
+    }
+
+    .weight-bar-track {
+      width: 100%;
+      height: 5px;
+      background: rgba(15, 23, 42, 0.9);
+      border-radius: 99px;
+      overflow: hidden;
+      margin-bottom: 9px;
+    }
+
+    .weight-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--indigo));
+      border-radius: 99px;
+      transition: width 0.15s ease;
+    }
+
+    .holding-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(37, 51, 77, 0.65);
+    }
+
+    .weight-edit-cluster {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .weight-input-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .weight-input-wrap span {
+      position: absolute;
+      left: 9px;
+      color: #93c5fd;
+      font-size: 14px;
+      font-weight: 900;
+      pointer-events: none;
+    }
+
+    .holding-weight-input {
+      width: 88px;
+      height: 40px;
+      padding: 0 8px 0 24px;
+      border-radius: 9px;
+      border: 1.5px solid rgba(59, 130, 246, 0.55);
+      background: #0b1120;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 900;
+      text-align: right;
+      outline: none;
+    }
+
+    .holding-weight-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+    }
+
+    .w-adj-btn {
+      height: 36px;
+      min-width: 34px;
+      padding: 0 6px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .w-adj-btn:active {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    /* ================= BOTTOM NAVIGATION BAR (5 TABS) ================= */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(17, 24, 39, 0.98);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-top: 1px solid var(--border-color);
+      padding-bottom: var(--safe-bottom);
+      height: calc(var(--nav-height) + var(--safe-bottom));
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+
+    .nav-item {
+      flex: 1;
+      height: 100%;
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      cursor: pointer;
+      position: relative;
+      padding: 5px 2px;
+    }
+
+    .nav-item.active {
+      color: var(--accent);
+    }
+
+    .nav-icon {
+      font-size: 18px;
+      line-height: 1;
+      position: relative;
+    }
+
+    .nav-badge {
+      position: absolute;
+      top: -5px;
+      right: -13px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 9px;
+      font-weight: 800;
+      padding: 1px 5px;
+      border-radius: 999px;
+      min-width: 16px;
+      text-align: center;
+    }
+
+    .nav-label {
+      font-size: 10.5px;
+      font-weight: 700;
+    }
+
+    /* ================= BOTTOM SHEET MODAL ================= */
+    .sheet-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.72);
+      z-index: 200;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .sheet-backdrop.open {
+      display: flex;
+    }
+
+    .bottom-sheet {
+      width: 100%;
+      max-width: 520px;
+      background: var(--bg-card);
+      border-top: 1px solid var(--border-color);
+      border-radius: 22px 22px 0 0;
+      padding: 18px 20px calc(24px + var(--safe-bottom));
+      animation: slideUp 0.22s ease;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .sheet-handle {
+      width: 40px;
+      height: 4px;
+      border-radius: 99px;
+      background: var(--text-muted);
+      margin: 0 auto 14px;
+    }
+
+    .toast {
+      position: fixed;
+      top: calc(60px + var(--safe-top));
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1e293b;
+      color: #fff;
+      border: 1px solid var(--accent);
+      padding: 8px 15px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 700;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.55);
+      z-index: 300;
+      display: none;
+      white-space: nowrap;
+      max-width: 92vw;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN SCREEN -->
+  <div id="login-screen">
+    <div class="login-card">
+      <div class="app-icon-large">BIST+</div>
+      <div class="login-header">
+        <h1>BIST & ABD Canlı Borsa</h1>
+        <p>Endeks, Döviz, Altın, Favoriler & Fon Takip</p>
+      </div>
+
+      <div id="login-error" class="error-banner">Kullanıcı adı veya şifre hatalı!</div>
+
+      <form id="login-form">
+        <div class="field-group">
+          <label for="login-username">Kullanıcı Adı</label>
+          <input type="text" id="login-username" class="input-mobile" placeholder="Kullanıcı adı" required autocomplete="username" />
+        </div>
+        <div class="field-group">
+          <label for="login-password">Şifre</label>
+          <input type="password" id="login-password" class="input-mobile" placeholder="Şifre" required autocomplete="current-password" />
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:6px; height:48px; font-size:15px;">
+          Giriş Yap
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MAIN MOBILE APP SHELL -->
+  <div id="app-shell">
+    <!-- TOP STICKY BAR -->
+    <header class="mobile-header">
+      <div class="header-row">
+        <div class="header-left">
+          <div class="mini-logo">BIST+</div>
+          <div class="header-titles">
+            <h1 id="page-title">Ana Ekran</h1>
+            <div class="live-meta">
+              <span class="pulse-dot" id="live-dot"></span>
+              <span id="feed-status-text">Canlı Bağlanıyor...</span>
+              <span>•</span>
+              <span id="last-update-text">--:--:--</span>
+            </div>
+          </div>
+        </div>
+
+        <button id="manual-refresh-btn" class="refresh-btn">
+          <span id="refresh-icon">↻</span> Güncelle
+        </button>
+      </div>
+    </header>
+
+    <!-- TAB VIEWS -->
+    <main class="view-container">
+
+      <!-- ================================================================= -->
+      <!-- 1. TAB: ANA EKRAN (COMPACT GRUPLAR + ENDEKS + DÖVİZ/ALTIN + FAV)   -->
+      <!-- ================================================================= -->
+      <section id="tab-home" class="tab-view active">
+
+        <!-- 1A. COMPACT GRUPLARIN GÜNLÜK DEĞİŞİMİ -->
+        <div class="section-heading">
+          <span>💼 Grupların Günlük Değişimi</span>
+          <span style="font-size:11px; color:var(--accent); cursor:pointer;" onclick="switchTab('tab-groups', true)">Grupları Yönet →</span>
+        </div>
+        <div id="home-groups-container" class="home-groups-box"></div>
+
+        <!-- 1B. COMPACT BIST ENDEKSLERİ -->
+        <div class="section-heading">
+          <span>📈 BIST Endeksleri</span>
+        </div>
+        <div class="ticker-grid-3" id="home-indices-grid"></div>
+
+        <!-- 1C. COMPACT DÖVİZ VE ALTIN -->
+        <div class="section-heading">
+          <span>💱 Döviz & Altın</span>
+        </div>
+        <div class="ticker-grid-fx" id="home-fx-gold-grid"></div>
+
+        <!-- 1D. FAVORİLERİM (AYRI AYRI: YERLİ & YABANCI) -->
+        <div class="section-heading" style="margin-top:4px;">
+          <span>⭐ Favorilerim (<span id="home-fav-count">0</span>)</span>
+          <span style="font-size:11px; color:var(--accent); cursor:pointer;" onclick="switchTab('tab-bist', true)">+ Hisse Ekle</span>
+        </div>
+        <div class="search-filter-box" style="margin-bottom:10px; padding:7px;">
+          <input type="text" id="fav-search-input" class="search-input" style="width:100%; height:36px; font-size:13.5px;" placeholder="Favorilerimde ara..." />
+        </div>
+
+        <!-- 1D-1. YERLİ HİSSELER (BIST) -->
+        <div class="section-heading" style="font-size:11px; color:var(--text-secondary); margin-bottom:4px;">
+          <span>🇹🇷 Yerli Hisseler (BIST) (<span id="home-bist-fav-count">0</span>)</span>
+        </div>
+        <div class="stock-list" style="margin-bottom:12px;">
+          <div class="stock-list-header">
+            <span>BIST FAVORİLER</span>
+            <span>FİYAT / GÜNLÜK %</span>
+          </div>
+          <div id="fav-bist-stocks-list"></div>
+        </div>
+
+        <!-- 1D-2. YABANCI HİSSELER (ABD) -->
+        <div class="section-heading" style="font-size:11px; color:var(--text-secondary); margin-bottom:4px;">
+          <span>🇺🇸 Yabancı Hisseler (ABD) (<span id="home-us-fav-count">0</span>)</span>
+        </div>
+        <div class="stock-list">
+          <div class="stock-list-header">
+            <span>ABD FAVORİLER</span>
+            <span>FİYAT / GÜNLÜK %</span>
+          </div>
+          <div id="fav-us-stocks-list"></div>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- 2. TAB: PİYASALAR (TÜM BIST HİSSELERİ - TEK EKRAN)                 -->
+      <!-- ================================================================= -->
+      <section id="tab-bist" class="tab-view">
+        <div class="kpi-strip">
+          <div class="kpi-card">
+            <div class="kpi-label">BIST Hisse</div>
+            <div class="kpi-val" id="stat-total">0</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">BIST Ortalama</div>
+            <div class="kpi-val" id="stat-avg">%0.00</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Yükselen</div>
+            <div class="kpi-val" style="color:var(--green);" id="stat-up">0</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Düşen</div>
+            <div class="kpi-val" style="color:var(--red);" id="stat-down">0</div>
+          </div>
+        </div>
+
+        <div class="search-filter-box">
+          <div class="search-row">
+            <input type="text" id="bist-search-input" class="search-input" placeholder="BIST hisse ara (A1CAP, ACSEL, THYAO...)" />
+            <select id="bist-sector-filter" class="sector-select">
+              <option value="ALL">Tüm Sektörler</option>
+            </select>
+          </div>
+          <div class="chip-scroll">
+            <button class="chip active" data-bist-filter="all">Tümü (Tek Ekran)</button>
+            <button class="chip" data-bist-filter="up">▲ Yükselenler</button>
+            <button class="chip" data-bist-filter="down">▼ Düşenler</button>
+            <button class="chip" data-bist-filter="flat">• Yatay</button>
+          </div>
+        </div>
+
+        <div class="stock-list">
+          <div class="stock-list-header">
+            <span>BIST PİYASASI (<span id="bist-visible-label">0</span>)</span>
+            <div class="sort-triggers">
+              <span id="sort-bist-symbol" class="active-sort" onclick="toggleBistSort('symbol')">Kod ⇅</span>
+              <span id="sort-bist-price" class="active-sort" onclick="toggleBistSort('price')">Fiyat ⇅</span>
+              <span id="sort-bist-changePct" onclick="toggleBistSort('changePct')">% Değişim ⇅</span>
+            </div>
+          </div>
+          <div id="bist-stocks-list"></div>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- 3. TAB: ABD BORSASI (YABANCI HİSSE SENEDİ - AMERİKA CANLI)        -->
+      <!-- ================================================================= -->
+      <section id="tab-us" class="tab-view">
+        <div class="kpi-strip">
+          <div class="kpi-card">
+            <div class="kpi-label">ABD Hisse</div>
+            <div class="kpi-val" id="us-stat-total">0</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">ABD Ortalama</div>
+            <div class="kpi-val" id="us-stat-avg">%0.00</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Yükselen</div>
+            <div class="kpi-val" style="color:var(--green);" id="us-stat-up">0</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Düşen</div>
+            <div class="kpi-val" style="color:var(--red);" id="us-stat-down">0</div>
+          </div>
+        </div>
+
+        <div class="search-filter-box">
+          <div class="search-row">
+            <input type="text" id="us-search-input" class="search-input" placeholder="ABD hisse ara (AAPL, NVDA, TSLA, MSFT...)" />
+            <select id="us-sector-filter" class="sector-select">
+              <option value="ALL">Tüm Sektörler</option>
+            </select>
+          </div>
+          <div class="chip-scroll">
+            <button class="chip active" data-us-filter="all">Tümü (NASDAQ / NYSE)</button>
+            <button class="chip" data-us-filter="up">▲ Yükselenler</button>
+            <button class="chip" data-us-filter="down">▼ Düşenler</button>
+            <button class="chip" data-us-filter="flat">• Yatay</button>
+          </div>
+        </div>
+
+        <div class="stock-list">
+          <div class="stock-list-header">
+            <span>ABD BORSASI ($) (<span id="us-visible-label">0</span>)</span>
+            <div class="sort-triggers">
+              <span id="sort-us-symbol" class="active-sort" onclick="toggleUsSort('symbol')">Kod ⇅</span>
+              <span id="sort-us-price" onclick="toggleUsSort('price')">Fiyat ($) ⇅</span>
+              <span id="sort-us-changePct" onclick="toggleUsSort('changePct')">% Değişim ⇅</span>
+            </div>
+          </div>
+          <div id="us-stocks-list"></div>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- 4. TAB: GRUPLAR (TÜM GRUPLAR EKRANDA + KOLAY YÜZDE GİRİŞİ)        -->
+      <!-- ================================================================= -->
+      <section id="tab-groups" class="tab-view">
+        <div class="card">
+          <div class="card-header-title">
+            <span>💼 Yeni Hisse Grubu Oluştur</span>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <input type="text" id="new-group-name" class="input-mobile" placeholder="Grup adı (örn: 1. Grup)" />
+            <button id="create-group-btn" class="btn btn-primary" style="white-space:nowrap;">+ Oluştur</button>
+          </div>
+        </div>
+
+        <!-- ALL GROUPS GRID (NO HORIZONTAL SWIPE NEEDED) -->
+        <div id="group-pills-row" class="group-pills-row"></div>
+
+        <div id="no-group-box" class="card" style="text-align:center; color:var(--text-secondary); padding:28px 16px;">
+          Henüz bir hisse grubunuz yok. Yukarıdan yeni bir grup oluşturun.
+        </div>
+
+        <div id="active-group-card" class="card" style="display:none;">
+          <div style="display:flex; gap:7px; margin-bottom:11px;">
+            <input type="text" id="edit-group-name-input" class="input-mobile" style="font-weight:800;" />
+            <button id="save-group-name-btn" class="btn btn-outline btn-sm" style="height:44px;">Kaydet</button>
+            <button id="delete-group-btn" class="btn btn-danger btn-sm" style="height:44px;">Sil</button>
+          </div>
+
+          <div class="fund-hero">
+            <div class="fund-hero-grid">
+              <div>
+                <div class="kpi-label">Günlük Tahmini Değişim</div>
+                <div id="group-daily-return" style="font-size:24px; font-weight:900; margin-top:2px;">%0.00</div>
+              </div>
+              <div>
+                <div class="kpi-label">Toplam Ağırlık Dağılımı</div>
+                <div id="group-total-weight" style="font-size:21px; font-weight:800; margin-top:2px;">%0.00</div>
+                <div id="weight-warn" style="font-size:11px; color:var(--amber); display:none;">Toplam %100 olmalıdır</div>
+              </div>
+            </div>
+
+            <!-- KULLANICININ KALICI GRUP BAKİYESİ & ARTTIR / AZALT KONTROLLERİ -->
+            <div class="balance-control-panel">
+              <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:10px;">
+                <div style="flex:1;">
+                  <div class="kpi-label">Grup Bakiyesi (₺) — Kalıcı Kayıtlı</div>
+                  <input type="text" inputmode="decimal" id="group-capital-input" class="input-mobile" placeholder="Bakiyenizi yazın (₺)" style="height:42px; margin-top:4px; font-size:16px; font-weight:800;" />
+                </div>
+                <div style="text-align:right; min-width:115px;">
+                  <div class="kpi-label">Günlük Tahmini Değer</div>
+                  <div id="group-capital-result" style="font-size:15px; font-weight:800; margin-top:4px;">0,00 ₺</div>
+                </div>
+              </div>
+
+              <!-- İSTEDİĞİNİZ TUTARI EKLE / ÇIKAR -->
+              <div class="custom-delta-row">
+                <input type="text" inputmode="decimal" id="custom-delta-input" class="input-mobile" placeholder="Tutar gir (₺)" style="height:36px; flex:1; font-size:14px;" />
+                <button type="button" class="btn btn-success btn-sm" style="height:36px; padding:0 11px;" onclick="applyCustomDelta(1)">+ Ekle</button>
+                <button type="button" class="btn btn-danger btn-sm" style="height:36px; padding:0 11px;" onclick="applyCustomDelta(-1)">- Çıkar</button>
+              </div>
+
+              <!-- HIZLI ARTTIR / AZALT BUTONLARI -->
+              <div class="balance-step-row">
+                <button type="button" class="step-btn minus" onclick="adjustGroupBalance(-5000)">-5.000 ₺</button>
+                <button type="button" class="step-btn minus" onclick="adjustGroupBalance(-1000)">-1.000 ₺</button>
+                <button type="button" class="step-btn plus" onclick="adjustGroupBalance(1000)">+1.000 ₺</button>
+                <button type="button" class="step-btn plus" onclick="adjustGroupBalance(5000)">+5.000 ₺</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- GRUBA HİSSE & YÜZDE EKLEME ALANI (KOLAY ARAMA + TEK DOKUNUŞ YÜZDE) -->
+          <div class="add-stock-box">
+            <div style="display:flex; gap:7px; margin-bottom:6px;">
+              <input type="text" id="group-stock-search" class="input-mobile" autocomplete="off" placeholder="Hisse kodu yaz (THYAO, NVDA...)" style="height:44px; flex:1; font-weight:700;" />
+              <div class="weight-input-wrap">
+                <span>%</span>
+                <input type="text" inputmode="decimal" id="group-stock-weight-add" class="holding-weight-input" placeholder="Yüzde" onfocus="this.select()" style="width:94px; height:44px;" />
+              </div>
+            </div>
+
+            <!-- INSTANT CLICKABLE AUTOCOMPLETE RESULTS -->
+            <div id="group-stock-suggestions" class="stock-suggestions-list"></div>
+
+            <!-- QUICK 1-TAP PERCENTAGE PRESETS -->
+            <div class="preset-pct-row">
+              <button type="button" class="preset-pct-btn" onclick="setAddStockWeight(10)">%10</button>
+              <button type="button" class="preset-pct-btn" onclick="setAddStockWeight(20)">%20</button>
+              <button type="button" class="preset-pct-btn" onclick="setAddStockWeight(25)">%25</button>
+              <button type="button" class="preset-pct-btn" onclick="setAddStockWeight(50)">%50</button>
+              <button type="button" class="preset-pct-btn" style="color:var(--green); border-color:rgba(16,185,129,0.4);" onclick="setAddRemainingWeight()">Kalan %</button>
+            </div>
+
+            <div style="display:flex; gap:8px;">
+              <button id="add-stock-to-group-btn" class="btn btn-success" style="flex:1;">+ Gruba Hisse Ekle</button>
+              <button id="equal-weights-btn" class="btn btn-outline">⚖️ Eşit % Dağıt</button>
+            </div>
+          </div>
+
+          <div id="group-holdings-list"></div>
+        </div>
+      </section>
+
+      
+      <!-- ================================================================= -->
+      <!-- 6. TAB: GRUP İÇERİKLERİ (TÜM GRUP HİSSELERİ ANLIK FİYAT & DEĞİŞİM)  -->
+      <!-- ================================================================= -->
+      <section id="tab-group-contents" class="tab-view">
+        <div class="section-heading">
+          <span>🗂️ Grup İçi Hisseler & Canlı Değişimler</span>
+        </div>
+        <!-- Üstte Grup Adları Seçim Çubuğu -->
+        <div id="contents-group-pills" style="display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; padding-bottom:6px; margin-bottom:10px;"></div>
+
+        <div class="stock-list">
+          <div class="stock-list-header">
+            <span>GURUPTAKİ HİSSELER</span>
+            <span>ANLIK FİYAT / % DEĞİŞİM</span>
+          </div>
+          <div id="contents-stocks-list"></div>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- 5. TAB: HESAP & AYARLAR                                           -->
+      <!-- ================================================================= -->
+      <section id="tab-settings" class="tab-view">
+        <div class="card">
+          <div class="card-header-title">
+            <span>📡 Canlı Veri Kaynakları Durumu</span>
+          </div>
+          <div id="api-diagnostic-box" style="font-size:12px; color:var(--text-secondary); background:var(--bg-secondary); padding:10px; border-radius:10px; border:1px solid var(--border-color); margin-bottom:12px;">
+            Durum kontrol ediliyor...
+          </div>
+          <div class="field-group">
+            <label>Otomatik Fiyat Güncelleme Süresi</label>
+            <select id="refresh-interval-select" class="input-mobile">
+              <option value="5000">Her 5 saniyede bir</option>
+              <option value="10000" selected>Her 10 saniyede bir</option>
+              <option value="30000">Her 30 saniyede bir</option>
+              <option value="60000">Her 1 dakikada bir</option>
+              <option value="0">Kapalı (Sadece Manuel Güncelle)</option>
+            </select>
+          </div>
+          <button id="reset-manual-overrides-btn" class="btn btn-outline" style="width:100%;">
+            Manuel Fiyat Düzeltmelerini Sıfırla (Canlı Veriye Dön)
+          </button>
+        </div>
+
+        <div class="card">
+          <div class="card-header-title">
+            <span>👤 Aktif Oturum: <strong id="active-username-label" style="color:var(--accent);">engin</strong></span>
+            <button id="logout-btn" class="btn btn-danger btn-sm">Çıkış Yap</button>
+          </div>
+          <p style="font-size:12.5px; color:var(--text-secondary);">
+            Girdiğiniz grup bakiyeleri, favorileriniz, gruplarınız, yüzdeleriniz ve kullanıcılarınız cihaz hafızasına kalıcı olarak kaydedilir; siz değiştirmedikçe sabit kalır.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-header-title"><span>🔑 Şifre Güncelle</span></div>
+          <form id="update-pass-form">
+            <div class="field-group">
+              <label>Kullanıcı Seçin</label>
+              <select id="update-pass-user-select" class="input-mobile"></select>
+            </div>
+            <div class="field-group">
+              <label>Yeni Şifre</label>
+              <input type="password" id="update-pass-new" class="input-mobile" placeholder="Yeni şifre" required />
+            </div>
+            <div class="field-group">
+              <label>Yeni Şifre (Tekrar)</label>
+              <input type="password" id="update-pass-confirm" class="input-mobile" placeholder="Yeni şifre tekrar" required />
+            </div>
+            <button type="submit" class="btn btn-success" style="width:100%;">Şifreyi Güncelle</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <div class="card-header-title"><span>➕ Yeni Kullanıcı Ekle</span></div>
+          <form id="add-user-form">
+            <div class="field-group">
+              <label>Yeni Kullanıcı Adı</label>
+              <input type="text" id="new-user-name" class="input-mobile" placeholder="Kullanıcı adı" required />
+            </div>
+            <div class="field-group">
+              <label>Şifre</label>
+              <input type="password" id="new-user-pass" class="input-mobile" placeholder="Şifre" required />
+            </div>
+            <div class="field-group">
+              <label>Yetki Rolü</label>
+              <select id="new-user-role" class="input-mobile">
+                <option value="Kullanıcı">Kullanıcı</option>
+                <option value="Yönetici">Yönetici</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%;">Kullanıcı Ekle</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <div class="card-header-title"><span>👥 Kayıtlı Kullanıcılar</span></div>
+          <div id="users-list-container"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header-title"><span>💾 Veri Yedekleme & Geri Yükleme</span></div>
+          <div style="display:flex; gap:8px;">
+            <button id="export-backup-btn" class="btn btn-outline" style="flex:1;">Yedeği İndir (.json)</button>
+            <label class="btn btn-outline" style="flex:1; cursor:pointer;">
+              Yedek Yükle
+              <input type="file" id="import-backup-input" accept=".json" style="display:none;" />
+            </label>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- BOTTOM NAVIGATION BAR (6 TABS) -->
+    <nav class="bottom-nav">
+      <button class="nav-item active" data-tab="tab-home" data-title="Ana Ekran">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-label">Ana Ekran</span>
+      </button>
+      <button class="nav-item" data-tab="tab-bist" data-title="Piyasalar (BIST)">
+        <span class="nav-icon">📊<span class="nav-badge" id="badge-bist">0</span></span>
+        <span class="nav-label">Piyasalar</span>
+      </button>
+      <button class="nav-item" data-tab="tab-us" data-title="ABD Borsası (USA)">
+        <span class="nav-icon">🇺🇸<span class="nav-badge" id="badge-us">0</span></span>
+        <span class="nav-label">ABD Borsa</span>
+      </button>
+      <button class="nav-item" data-tab="tab-groups" data-title="Hisse Grupları">
+        <span class="nav-icon">💼<span class="nav-badge" id="badge-groups">0</span></span>
+        <span class="nav-label">Gruplar</span>
+      </button>
+      <button class="nav-item" data-tab="tab-group-contents" data-title="Grup İçerikleri">
+        <span class="nav-icon">🗂️<span class="nav-badge" id="badge-contents">0</span></span>
+        <span class="nav-label">İçerikler</span>
+      </button>
+      <button class="nav-item" data-tab="tab-settings" data-title="Hesap & Ayarlar">
+        <span class="nav-icon">👤</span>
+        <span class="nav-label">Hesap</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- BOTTOM SHEET 1: QUICK ADD TO GROUP -->
+  <div id="quick-group-sheet" class="sheet-backdrop">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <div class="card-header-title">
+        <span>💼 Gruba Ekle: <strong id="sheet-stock-symbol" style="color:var(--accent);"></strong></span>
+        <button id="close-sheet-btn" class="btn btn-outline btn-sm">Kapat</button>
+      </div>
+      <div class="field-group">
+        <label>Grup Seçin</label>
+        <select id="sheet-group-select" class="input-mobile"></select>
+      </div>
+      <div class="field-group">
+        <label>Gruptaki Yüzde Ağırlığı (%)</label>
+        <input type="text" inputmode="decimal" id="sheet-weight-input" class="input-mobile" value="25" onfocus="this.select()" />
+      </div>
+      <button id="sheet-confirm-btn" class="btn btn-primary" style="width:100%; height:46px;">Gruba Ekle</button>
+    </div>
+  </div>
+
+  <!-- BOTTOM SHEET 2: EDIT PRICE & DAILY % -->
+  <div id="edit-price-sheet" class="sheet-backdrop">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <div class="card-header-title">
+        <span>✏️ Fiyat Düzenle: <strong id="edit-price-symbol" style="color:var(--accent);"></strong></span>
+        <button id="close-price-sheet-btn" class="btn btn-outline btn-sm">Kapat</button>
+      </div>
+      <p id="edit-price-company" style="font-size:12.5px; color:var(--text-secondary); margin-bottom:12px;"></p>
+      <div class="field-group">
+        <label id="edit-price-val-label">Güncel Fiyat</label>
+        <input type="text" inputmode="decimal" id="edit-price-val-input" class="input-mobile" onfocus="this.select()" />
+      </div>
+      <div class="field-group">
+        <label>Günlük Değişim (%)</label>
+        <input type="text" inputmode="decimal" id="edit-price-pct-input" class="input-mobile" onfocus="this.select()" />
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button id="save-manual-price-btn" class="btn btn-success" style="flex:1; height:46px;">Kaydet</button>
+        <button id="clear-single-manual-btn" class="btn btn-outline" style="height:46px;">Canlıya Dön</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    // =========================================================================
+    // 1. DATABASES: 583 BIST STOCKS + 120 US STOCKS + INDICES + FX & GOLD
+    // =========================================================================
+    const INITIAL_BIST_DATA = [["A1CAP", "A1 Capital Yatırım Menkul Değerler", "Finans", 3.12], ["ACSEL", "Acıselsan Acıpayam Selüloz", "Kimya & Plastik", 82.4], ["ADEL", "Adel Kalemcilik", "Tüketim & Kırtasiye", 42.6], ["ADESE", "Adese Gayrimenkul Yatırım", "GYO", 2.18], ["ADGYO", "Adra Gayrimenkul Yatırım Ortaklığı", "GYO", 34.4], ["AEFES", "Anadolu Efes Biracılık", "İçecek & Gıda", 215.0], ["AFYON", "Afyon Çimento", "Çimento & İnşaat", 14.35], ["AGESA", "AgeSA Hayat ve Emeklilik", "Sigorta", 142.8], ["AGHOL", "AG Anadolu Grubu Holding", "Holding", 338.5], ["AGROT", "Agrotech Yüksek Teknoloji", "Teknoloji & Tarım", 13.9], ["AHGAZ", "Ahlatcı Doğal Gaz Dağıtım", "Enerji", 17.65], ["AHSGY", "Ahes Gayrimenkul Yatırım Ortaklığı", "GYO", 26.4], ["AKBNK", "Akbank T.A.Ş.", "Bankacılık", 61.45], ["AKCNS", "Akçansa Çimento", "Çimento & İnşaat", 174.2], ["AKENR", "Akenerji Elektrik Üretim", "Enerji", 12.15], ["AKFGY", "Akfen Gayrimenkul Yatırım Ortaklığı", "GYO", 2.42], ["AKFIS", "Akfen İnşaat Turizm ve Ticaret", "İnşaat", 23.1], ["AKFYE", "Akfen Yenilenebilir Enerji", "Enerji", 20.85], ["AKGRT", "Aksigorta A.Ş.", "Sigorta", 7.45], ["AKMGY", "Akmerkez Gayrimenkul Yatırım Ortaklığı", "GYO", 238.0], ["AKSA", "Aksa Akrilik Kimya", "Kimya & Tekstil", 11.4], ["AKSEN", "Aksa Enerji Üretim", "Enerji", 39.8], ["AKSGY", "Akiş Gayrimenkul Yatırım Ortaklığı", "GYO", 6.85], ["AKSUE", "Aksu Enerji ve Ticaret", "Enerji", 14.9], ["AKYHO", "Akdeniz Yatırım Holding", "Holding", 4.12], ["ALARK", "Alarko Holding", "Holding", 98.5], ["ALBRK", "Albaraka Türk Katılım Bankası", "Bankacılık", 6.54], ["ALCAR", "Alarko Carrier Sanayi", "İklimlendirme & Sanayi", 1145.0], ["ALCTL", "Alcatel Lucent Teletaş", "Telekomünikasyon", 112.4], ["ALFAS", "Alfa Solar Enerji", "Enerji", 68.9], ["ALGYO", "Alarko Gayrimenkul Yatırım Ortaklığı", "GYO", 23.4], ["ALKA", "Alkim Kağıt", "Kağıt & Ambalaj", 10.65], ["ALKIM", "Alkim Alkali Kimya", "Kimya & Madencilik", 19.3], ["ALMAD", "Altınyağ Madencilik ve Enerji", "Madencilik", 7.82], ["ALTIN", "Darphane Altın Sertifikası", "Emtia & Sertifika", 32.45], ["ALTNY", "Altınay Savunma Teknolojileri", "Savunma & Teknoloji", 89.2], ["ALVES", "Alves Kablo", "Elektrik & Kablo", 37.6], ["ANELE", "Anel Elektrik Proje", "İnşaat & Taahhüt", 18.75], ["ANGEN", "Anatolia Tanı ve Biyoteknoloji", "Sağlık & Biyoteknoloji", 13.4], ["ANHYT", "Anadolu Hayat Emeklilik", "Sigorta", 104.5], ["ANSGR", "Anadolu Anonim Türk Sigorta", "Sigorta", 96.8], ["ARCLK", "Arçelik A.Ş.", "Dayanıklı Tüketim", 148.9], ["ARDYZ", "ARD Grup Bilişim Teknolojileri", "Yazılım & Bilişim", 36.2], ["ARENA", "Arena Bilgisayar", "Teknoloji & Dağıtım", 44.1], ["ARMGD", "Armada Gıda Ticaret", "Gıda", 33.8], ["ARSAN", "Arsan Tekstil", "Tekstil", 2.65], ["ARTMS", "Artemis Halı", "Tekstil", 41.5], ["ARZUM", "Arzum Elektrikli Ev Aletleri", "Dayanıklı Tüketim", 4.88], ["ASELS", "Aselsan Elektronik Sanayi", "Savunma & Teknoloji", 74.35], ["ASGYO", "Asce Gayrimenkul Yatırım Ortaklığı", "GYO", 11.95], ["ASTOR", "Astor Enerji", "Enerji & Ekipman", 108.4], ["ASUZU", "Anadolu Isuzu Otomotiv", "Otomotiv", 69.5], ["ATAGY", "Ata Gayrimenkul Yatırım Ortaklığı", "GYO", 12.6], ["ATAKP", "Atakey Patates Gıda", "Gıda", 45.7], ["ATATP", "ATP Ticari Bilgisayar Ağı", "Yazılım & Bilişim", 94.3], ["ATEKS", "Akın Tekstil", "Tekstil", 142.0], ["ATLAS", "Atlas Menkul Kıymetler YO", "Yatırım Ortaklığı", 4.95], ["ATSYH", "Atlantis Yatırım Holding", "Holding", 48.2], ["AVGYO", "Avrasya Gayrimenkul YO", "GYO", 8.74], ["AVHOL", "Avrupa Yatırım Holding", "Holding", 38.9], ["AVOD", "A.V.O.D. Kurutulmuş Gıda", "Gıda", 3.45], ["AVPGY", "Avrupakent Gayrimenkul YO", "GYO", 56.2], ["AVTUR", "Avrasya Petrol ve Turistik Tesisler", "Turizm", 9.15], ["AYCES", "Altın Yunus Çeşme Turistik", "Turizm", 645.0], ["AYDEM", "Aydem Yenilenebilir Enerji", "Enerji", 24.6], ["AYEN", "Ayen Enerji", "Enerji", 28.9], ["AYES", "Ayes Çelik Hasır ve Çit", "Metal & Çelik", 29.4], ["AYGAZ", "Aygaz A.Ş.", "Enerji & LPG", 168.5], ["AZTEK", "Aztek Teknoloji Ürünleri", "Teknoloji", 48.7], ["BAGFS", "Bagfaş Bandırma Gübre Fabrikaları", "Kimya & Gübre", 25.3], ["BAHKM", "Bahadır Kimya", "Kimya", 52.4], ["BAKAB", "Bak Ambalaj Sanayi", "Kağıt & Ambalaj", 31.8], ["BALAT", "Balatacılar Balatacılık", "Otomotiv Yan Sanayi", 28.1], ["BANVT", "Banvit Bandırma Vitaminli Yem", "Gıda", 286.0], ["BARMA", "Barem Ambalaj Sanayi", "Kağıt & Ambalaj", 19.45], ["BASCM", "Baştaş Başkent Çimento", "Çimento & İnşaat", 7.9], ["BASGZ", "Başkent Doğalgaz Dağıtım GYO", "Enerji", 29.7], ["BAYRK", "Bayrak EBT Taban Sanayi", "Sanayi", 16.8], ["BEGYO", "Batı Ege Gayrimenkul YO", "GYO", 6.12], ["BERA", "Bera Holding", "Holding", 16.45], ["BEYAZ", "Beyaz Filo Oto Kiralama", "Otomotiv & Kiralama", 22.9], ["BFREN", "Bosch Fren Sistemleri", "Otomotiv Yan Sanayi", 815.0], ["BIENY", "Bien Yapı Ürünleri", "Seramik & Yapı", 33.4], ["BIGCH", "Büyük Şefler Gıda (BigChefs)", "Restoran & Gıda", 32.1], ["BIGEN", "Birleşim Grup Enerji Yatırımları", "Enerji", 14.8], ["BIMAS", "BİM Birleşik Mağazalar", "Perakende", 518.0], ["BINBN", "Bin Ulaşım ve Akıllı Şehir Teknolojileri", "Ulaşım & Teknoloji", 46.5], ["BINHO", "1000 Yatırımlar Holding", "Holding", 298.0], ["BIOEN", "Biotrend Çevre ve Enerji", "Enerji & Çevre", 18.2], ["BIZIM", "Bizim Toptan Satış Mağazaları", "Perakende", 31.6], ["BJKAS", "Beşiktaş Futbol Yatırımları", "Spor", 4.38], ["BLCYT", "Bilici Yatırım Sanayi", "Tekstil & Turizm", 18.95], ["BMSCH", "BMS Çelik Hasır", "Metal & Çelik", 29.1], ["BMSTL", "BMS Birleşik Metal Sanayi", "Metal & Çelik", 42.3], ["BNTAS", "Bantaş Bandırma Ambalaj", "Ambalaj", 13.75], ["BOBET", "Boğaziçi Beton Sanayi", "Çimento & Beton", 24.4], ["BORLS", "Borlease Otomotiv", "Otomotiv & Kiralama", 39.5], ["BORSK", "Bor Şeker", "Gıda", 26.8], ["BOSSA", "Bossa Ticaret ve Sanayi", "Tekstil", 8.42], ["BRISA", "Brisa Bridgestone Sabancı Lastik", "Otomotiv Yan Sanayi", 94.6], ["BRKO", "Birko Birleşik Koyunlulular", "Tekstil", 8.15], ["BRKSN", "Berkosan Yalıtım", "İnşaat Malzemeleri", 34.9], ["BRKVY", "Birikim Varlık Yönetim", "Finans", 68.5], ["BRLSM", "Birleşim Mühendislik", "İnşaat & Mühendislik", 19.6], ["BRMEN", "Birlik Mensucat", "Tekstil", 7.3], ["BRSAN", "Borusan Birleşik Boru Fabrikaları", "Metal & Boru", 442.0], ["BRYAT", "Borusan Yatırım ve Pazarlama", "Holding", 2185.0], ["BSOKE", "Batısöke Söke Çimento", "Çimento & İnşaat", 12.85], ["BTCIM", "Batıçim Batı Anadolu Çimento", "Çimento & İnşaat", 4.65], ["BUCIM", "Bursa Çimento", "Çimento & İnşaat", 8.12], ["BURCE", "Burçelik Bursa Çelik Döküm", "Metal & Makine", 168.0], ["BURVA", "Burçelik Vana Sanayi", "Makine & Vana", 94.5], ["BVSAN", "Bülbüloğlu Vinç Sanayi", "Makine", 98.2], ["BYDNR", "Baydöner Restoranları", "Restoran & Gıda", 33.7], ["CANTE", "Çan2 Termik A.Ş.", "Enerji", 1.74], ["CASA", "Casa Emtia Petrol Kimyevi", "Ticaret", 98.0], ["CATES", "Çates Elektrik Üretim", "Enerji", 46.8], ["CCOLA", "Coca-Cola İçecek", "İçecek & Gıda", 58.9], ["CELHA", "Çelik Halat ve Tel Sanayi", "Metal & Çelik", 24.3], ["CEMAS", "Çemaş Döküm Sanayi", "Metal & Döküm", 4.18], ["CEMTS", "Çemtaş Çelik Makina", "Metal & Çelik", 11.45], ["CEMZY", "Cem Zeytin", "Gıda", 13.2], ["CEOEM", "CEO Event Medya", "Medya & Organizasyon", 38.4], ["CGCAM", "Çağdaş Cam Sanayi", "Cam & Yapı", 27.6], ["CIMSA", "Çimsa Çimento Sanayi", "Çimento & İnşaat", 44.8], ["CLEBI", "Çelebi Hava Servisi", "Havacılık & Lojistik", 2190.0], ["CMBTN", "Çimbeton Hazırbeton", "Çimento & Beton", 2480.0], ["CMENT", "Çimentaş İzmir Çimento", "Çimento & İnşaat", 412.0], ["CONSE", "Consus Enerji İşletmeciliği", "Enerji", 5.84], ["COSMO", "Cosmos Yatırım Holding", "Holding", 84.5], ["CRDFA", "Creditwest Faktoring", "Faktoring & Finans", 11.2], ["CRFSA", "CarrefourSA Carrefour Sabancı", "Perakende", 118.4], ["CUSAN", "Çuhadaroğlu Metal Sanayi", "Metal & Alüminyum", 23.9], ["CVKMD", "CVK Maden İşletmeleri", "Madencilik", 11.65], ["CWENE", "CW Enerji Mühendislik", "Enerji", 22.8], ["DAGHL", "Dagi Yatırım Holding", "Holding", 19.4], ["DAGI", "Dagi Giyim Sanayi", "Tekstil & Perakende", 8.95], ["DAPGM", "DAP Gayrimenkul Geliştirme", "GYO", 7.42], ["DARDL", "Dardanel Önentaş Gıda", "Gıda", 6.18], ["DCTTR", "DCT Trading Dış Ticaret", "Dış Ticaret", 31.5], ["DENGE", "Denge Yatırım Holding", "Holding", 3.12], ["DERHL", "Derlüks Yatırım Holding", "Holding", 17.8], ["DERIM", "Derimod Konfeksiyon", "Tekstil & Perakende", 36.4], ["DESA", "Desa Deri Sanayi", "Tekstil & Deri", 24.1], ["DESPC", "Despec Bilgisayar", "Teknoloji & Dağıtım", 44.6], ["DEVA", "Deva Holding", "İlaç & Sağlık", 79.8], ["DGATE", "Datagate Bilgisayar", "Teknoloji & Dağıtım", 48.2], ["DGGYO", "Doğuş Gayrimenkul YO", "GYO", 39.7], ["DGNMO", "Doğanlar Mobilya Grubu", "Mobilya", 10.85], ["DIRIT", "Diriteks Diriliş Tekstil", "Tekstil", 19.3], ["DITAS", "Ditaş Doğan Yedek Parça", "Otomotiv Yan Sanayi", 21.4], ["DMRGD", "DMR Unlu Mamuller", "Gıda", 17.9], ["DMSAS", "Demisaş Döküm Emaye Mamülleri", "Metal & Döküm", 8.65], ["DNISI", "Dinamik Isı Makina Yalıtım", "İnşaat Malzemeleri", 14.2], ["DOAS", "Doğuş Otomotiv Servis", "Otomotiv", 214.5], ["DOBUR", "Doğan Burda Dergi Yayıncılık", "Medya & Yayıncılık", 184.0], ["DOCO", "DO & CO Aktiengesellschaft", "Havacılık & Catering", 5890.0], ["DOFER", "Dofer Yapı Malzemeleri", "İnşaat Malzemeleri", 36.8], ["DOGUB", "Doğusan Boru Sanayi", "İnşaat Malzemeleri", 32.4], ["DOHOL", "Doğan Şirketler Grubu Holding", "Holding", 15.65], ["DOKTA", "Döktaş Dökümcülük", "Metal & Döküm", 34.2], ["DSTKF", "Destek Finans Faktoring", "Faktoring & Finans", 64.5], ["DURDO", "Duran Doğan Basım ve Ambalaj", "Kağıt & Ambalaj", 18.7], ["DURKN", "Durukan Şekerleme", "Gıda", 16.4], ["DYOBY", "DYO Boya Fabrikaları", "Kimya & Boya", 16.95], ["DZGYO", "Deniz Gayrimenkul YO", "GYO", 8.34], ["EBEBK", "Ebebek Mağazacılık", "Perakende", 54.8], ["ECILC", "EİS Eczacıbaşı İlaç", "İlaç & Holding", 48.6], ["ECZYT", "Eczacıbaşı Yatırım Holding", "Holding", 212.0], ["EDATA", "E-Data Teknoloji Pazarlama", "Teknoloji", 13.8], ["EDIP", "Edip Gayrimenkul Yatırım", "GYO", 21.6], ["EFORC", "Efor Çay Sanayi", "Gıda", 58.4], ["EGEEN", "Ege Endüstri ve Ticaret", "Otomotiv Yan Sanayi", 10450.0], ["EGEGY", "EgeYapı Avrupa Gayrimenkul YO", "GYO", 16.2], ["EGEPO", "Nasmed Özel Sağlık Hizmetleri", "Sağlık", 24.9], ["EGGUB", "Ege Gübre Sanayi", "Kimya & Liman", 56.3], ["EGPRO", "Ege Profil Ticaret", "İnşaat Malzemeleri", 26.8], ["EGSER", "Ege Seramik Sanayi", "Seramik & Yapı", 6.45], ["EKGYO", "Emlak Konut Gayrimenkul YO", "GYO", 13.85], ["EKIZ", "Ekiz Kimya Sanayi", "Kimya", 52.1], ["EKOS", "Ekos Teknoloji ve Elektrik", "Enerji & Teknoloji", 33.4], ["EKSUN", "Eksun Gıda Tarım Sanayi", "Gıda", 6.92], ["ELITE", "Elite Naturel Organik Gıda", "Gıda", 34.5], ["EMKEL", "Emek Elektrik Endüstrisi", "Elektrik & Enerji", 14.6], ["EMNIS", "Eminiş Ambalaj Sanayi", "Ambalaj", 198.0], ["ENDAE", "Enda Enerji Holding", "Enerji", 17.8], ["ENERY", "Enerya Enerji", "Enerji", 6.48], ["ENJSA", "Enerjisa Enerji", "Enerji", 61.2], ["ENKAI", "Enka İnşaat ve Sanayi", "İnşaat & Taahhüt", 52.4], ["ENSRI", "Ensari Deri Gıda Sanayi", "Tekstil & Deri", 16.9], ["ENTRA", "IC Enterra Yenilenebilir Enerji", "Enerji", 10.45], ["EPLAS", "Egeplast Ege Plastik", "Kimya & Plastik", 9.8], ["ERBOS", "Erbosan Erciyas Boru", "Metal & Boru", 196.5], ["ERCB", "Erciyas Çelik Boru Sanayi", "Metal & Boru", 104.2], ["EREGL", "Ereğli Demir ve Çelik Fabrikaları", "Demir & Çelik", 26.8], ["ERSU", "Ersu Meyve ve Gıda Sanayi", "Gıda", 14.3], ["ESCAR", "Escar Filo Kiralama Hizmetleri", "Otomotiv & Kiralama", 38.6], ["ESCOM", "Escort Teknoloji Yatırım", "Teknoloji & Girişim", 34.2], ["ESEN", "Esenboğa Elektrik Üretim", "Enerji", 24.5], ["ETILR", "Etiler Gıda ve Ticari Yatırımlar", "Restoran & Gıda", 14.9], ["ETYAT", "Euro Trend Yatırım Ortaklığı", "Yatırım Ortaklığı", 8.12], ["EUHOL", "Euro Yatırım Holding", "Holding", 8.45], ["EUKYO", "Euro Kapital Yatırım Ortaklığı", "Yatırım Ortaklığı", 9.3], ["EUREN", "Europen Endüstri İnşaat", "Cam & Yapı", 11.75], ["EUYO", "Euro Menkul Kıymet YO", "Yatırım Ortaklığı", 9.65], ["EYGYO", "EYG Gayrimenkul YO", "GYO", 2.94], ["FADE", "Fade Gıda Yatırım Sanayi", "Gıda", 16.4], ["FENER", "Fenerbahçe Futbol A.Ş.", "Spor", 48.9], ["FLAP", "Flap Kongre Toplantı Hizmetleri", "Turizm & Organizasyon", 9.85], ["FMIZP", "Federal-Mogul İzmit Piston", "Otomotiv Yan Sanayi", 312.0], ["FONET", "Fonet Bilgi Teknolojileri", "Yazılım & Bilişim", 19.6], ["FORMT", "Formet Metal ve Cam Sanayi", "Metal & Dayanıklı Tüketim", 4.18], ["FORTE", "Forte Bilgi İletişim Teknolojileri", "Yazılım & Savunma", 56.4], ["FRIGO", "Frigo-Pak Gıda Maddeleri", "Gıda", 8.75], ["FROTO", "Ford Otomotiv Sanayi", "Otomotiv", 985.0], ["FZLGY", "Fuzul Gayrimenkul YO", "GYO", 15.4], ["GARAN", "Türkiye Garanti Bankası", "Bankacılık", 124.8], ["GARFA", "Garanti Faktoring", "Faktoring & Finans", 29.6], ["GEDIK", "Gedik Yatırım Menkul Değerler", "Finans", 8.9], ["GEDZA", "Gediz Ambalaj Sanayi", "Ambalaj", 24.3], ["GENIL", "Gen İlaç ve Sağlık Ürünleri", "İlaç & Sağlık", 112.5], ["GENTS", "Gentaş Dekoratif Yüzeyler", "Orman Ürünleri & Mobilya", 12.8], ["GEREL", "Gersan Elektrik Ticaret", "Elektrik & Enerji", 26.4], ["GESAN", "Girişim Elektrik Sanayi", "Enerji & Taahhüt", 54.2], ["GIPTA", "Gıpta Ofis Kırtasiye", "Tüketim & Kırtasiye", 42.8], ["GLBMD", "Global Menkul Değerler", "Finans", 13.45], ["GLCVY", "Gelecek Varlık Yönetimi", "Finans", 49.6], ["GLRMK", "Gülermak Ağır Sanayi İnşaat", "İnşaat & Taahhüt", 146.5], ["GLRYH", "Güler Yatırım Holding", "Holding", 3.68], ["GLYHO", "Global Yatırım Holding", "Holding & Liman", 18.4], ["GMTAS", "Gimat Mağazacılık Sanayi", "Perakende", 15.9], ["GOKNR", "Göknur Gıda Maddeleri", "Gıda", 23.6], ["GOLTS", "Göltaş Göller Bölgesi Çimento", "Çimento & İnşaat", 418.0], ["GOODY", "Goodyear Lastikleri T.A.Ş.", "Otomotiv Yan Sanayi", 19.45], ["GOZDE", "Gözde Girişim Sermayesi YO", "Girişim Sermayesi", 28.9], ["GRNYO", "Garanti Yatırım Ortaklığı", "Yatırım Ortaklığı", 8.75], ["GRSEL", "Gür-Sel Turizm Taşımacılık", "Ulaşım & Turizm", 174.5], ["GRTHO", "GrainTurk Holding", "Tarım & Holding", 168.0], ["GSDDE", "GSD Denizcilik Gayrimenkul", "Denizcilik & Lojistik", 10.4], ["GSDHO", "GSD Holding", "Holding", 4.62], ["GSRAY", "Galatasaray Sportif", "Spor", 1.98], ["GUBRF", "Gübre Fabrikaları T.A.Ş.", "Kimya & Gübre", 242.0], ["GUNDG", "Gündoğdu Gıda Süt Ürünleri", "Gıda", 44.8], ["GWIND", "Galata Wind Enerji", "Enerji", 29.6], ["GZNMI", "Gezinomi Seyahat Turizm", "Turizm", 46.2], ["HALKB", "Türkiye Halk Bankası", "Bankacılık", 17.85], ["HATEK", "Hateks Hatay Tekstil", "Tekstil", 19.4], ["HATSN", "Hat-San Gemi İnşaa Bakım", "Denizcilik & Tersane", 48.5], ["HDFGS", "Hedef Girişim Sermayesi YO", "Girişim Sermayesi", 2.34], ["HEDEF", "Hedef Holding", "Holding", 11.85], ["HEKTS", "Hektaş Ticaret T.A.Ş.", "Kimya & Tarım", 3.92], ["HKTM", "Hidropar Hareket Kontrol", "Makine & Otomasyon", 24.6], ["HLGYO", "Halk Gayrimenkul YO", "GYO", 3.64], ["HOROZ", "Horoz Lojistik Kargo", "Lojistik", 54.9], ["HRKET", "Hareket Proje Taşımacılığı", "Lojistik & Mühendislik", 68.4], ["HTTBT", "Hitit Bilgisayar Hizmetleri", "Yazılım & Havacılık", 44.2], ["HUBVC", "Hub Girişim Sermayesi YO", "Girişim Sermayesi", 8.15], ["HUNER", "Hun Yenilenebilir Enerji", "Enerji", 4.48], ["HURGZ", "Hürriyet Gazetecilik", "Medya & Yayıncılık", 4.12], ["ICBCT", "ICBC Turkey Bank", "Bankacılık", 14.9], ["ICUGS", "ICU Girişim Sermayesi YO", "Girişim Sermayesi", 18.6], ["IDGYO", "İdealist Gayrimenkul YO", "GYO", 6.45], ["IEYHO", "Işıklar Enerji ve Yapı Holding", "Holding", 10.85], ["IHAAS", "İhlas Haber Ajansı", "Medya", 28.4], ["IHEVA", "İhlas Ev Aletleri", "Dayanıklı Tüketim", 2.74], ["IHGZT", "İhlas Gazetecilik", "Medya & Yayıncılık", 2.15], ["IHLAS", "İhlas Holding", "Holding", 2.38], ["IHLGM", "İhlas Gayrimenkul Proje", "GYO", 2.12], ["IHYAY", "İhlas Yayın Holding", "Medya & Holding", 2.46], ["IMASM", "İmaş Makina Sanayi", "Makine", 16.8], ["INDES", "İndeks Bilgisayar Sistemleri", "Teknoloji & Dağıtım", 7.85], ["INFO", "İnfo Yatırım Menkul Değerler", "Finans", 4.32], ["INGRM", "Ingram Micro Bilişim", "Teknoloji & Dağıtım", 365.0], ["INTEM", "İntema İnşaat ve Tesisat", "İnşaat Malzemeleri", 268.0], ["INVEO", "Inveo Yatırım Holding", "Holding", 31.4], ["INVES", "Investco Holding", "Holding", 234.0], ["IPEKE", "İpek Doğal Enerji Kaynakları", "Enerji & Madencilik", 44.6], ["ISATR", "Türkiye İş Bankası (A)", "Bankacılık", 485000.0], ["ISBIR", "İşbir Holding", "Holding", 124.5], ["ISBTR", "Türkiye İş Bankası (B)", "Bankacılık", 38500.0], ["ISCTR", "Türkiye İş Bankası (C)", "Bankacılık", 14.42], ["ISDMR", "İskenderun Demir ve Çelik", "Demir & Çelik", 38.9], ["ISFIN", "İş Finansal Kiralama", "Leasing & Finans", 14.8], ["ISGSY", "İş Girişim Sermayesi YO", "Girişim Sermayesi", 38.4], ["ISGYO", "İş Gayrimenkul YO", "GYO", 18.65], ["ISKPL", "Işık Plastik Sanayi", "Kimya & Plastik", 9.45], ["ISKUR", "Türkiye İş Bankası (Kurucu)", "Bankacılık", 1420000.0], ["ISMEN", "İş Yatırım Menkul Değerler", "Finans", 42.8], ["ISSEN", "İşbir Sentetik Dokuma", "Tekstil & Ambalaj", 11.9], ["ISYAT", "İş Yatırım Ortaklığı", "Yatırım Ortaklığı", 11.45], ["IZENR", "İzdemir Enerji Elektrik Üretim", "Enerji", 6.18], ["IZFAS", "İzmir Fırça Sanayi", "Tüketim", 44.2], ["IZINV", "İz Yatırım Holding", "Holding", 46.8], ["IZMDC", "İzmir Demir Çelik Sanayi", "Demir & Çelik", 5.84], ["JANTS", "Jantsa Jant Sanayi", "Otomotiv Yan Sanayi", 26.4], ["KAPLM", "Kaplamin Ambalaj Sanayi", "Kağıt & Ambalaj", 184.0], ["KAREL", "Karel Elektronik Sanayi", "Elektronik & Telekom", 11.45], ["KARSN", "Karsan Otomotiv Sanayi", "Otomotiv", 13.8], ["KARTN", "Kartonsan Karton Sanayi", "Kağıt & Ambalaj", 96.4], ["KARYE", "Kartal Yenilenebilir Enerji", "Enerji", 24.6], ["KATMR", "Katmerciler Araç Üstü Ekipman", "Otomotiv & Savunma", 2.48], ["KAYSE", "Kayseri Şeker Fabrikası", "Gıda", 21.9], ["KBORU", "Kuzey Boru A.Ş.", "Metal & Plastik Boru", 114.5], ["KCAER", "Kocaer Çelik Sanayi", "Demir & Çelik", 14.65], ["KCHOL", "Koç Holding A.Ş.", "Holding", 196.4], ["KENT", "Kent Gıda Maddeleri", "Gıda", 585.0], ["KERVN", "Kervansaray Yatırım Holding", "Turizm & Holding", 2.64], ["KERVT", "Kerevitaş Gıda Sanayi", "Gıda", 14.2], ["KFEIN", "Kafein Yazılım Hizmetleri", "Yazılım & Bilişim", 124.8], ["KGYO", "Koray Gayrimenkul YO", "GYO", 12.6], ["KIMMR", "Ersan Alışveriş Hizmetleri (Kim Market)", "Perakende", 14.85], ["KLGYO", "Kiler Gayrimenkul YO", "GYO", 4.18], ["KLKIM", "Kalekim Kimyevi Maddeler", "İnşaat Kimyasalları", 29.4], ["KLMSN", "Klimasan Klima Sanayi", "İklimlendirme", 24.9], ["KLNMA", "Türkiye Kalkınma ve Yatırım Bankası", "Bankacılık", 28.6], ["KLRHO", "Kiler Holding", "Holding", 36.8], ["KLSER", "Kaleseramik Çanakkale Kalebodur", "Seramik & Yapı", 34.5], ["KLSYN", "Koleksiyon Mobilya Sanayi", "Mobilya", 5.42], ["KLYPV", "Kalyon Güneş Teknolojileri", "Enerji", 68.5], ["KMPUR", "Kimteks Poliüretan Sanayi", "Kimya", 19.8], ["KNFRT", "Konfrut Gıda Sanayi", "Gıda", 15.4], ["KOCMT", "Koç Metalurji", "Demir & Çelik", 16.9], ["KONKA", "Konya Kağıt Sanayi", "Kağıt & Ambalaj", 44.6], ["KONTR", "Kontrolmatik Teknoloji Enerji", "Enerji & Teknoloji", 46.8], ["KONYA", "Konya Çimento Sanayi", "Çimento & İnşaat", 6450.0], ["KOPOL", "Koza Polyester Sanayi", "Kimya & Tekstil", 38.4], ["KORDS", "Kordsa Teknik Tekstil", "Tekstil & Kompozit", 74.2], ["KOTON", "Koton Mağazacılık Tekstil", "Perakende & Tekstil", 21.6], ["KOZAA", "Koza Anadolu Metal Madencilik", "Madencilik", 68.9], ["KOZAL", "Koza Altın İşletmeleri", "Madencilik", 24.4], ["KRDMA", "Kardemir Karabük Demir Çelik (A)", "Demir & Çelik", 24.8], ["KRDMB", "Kardemir Karabük Demir Çelik (B)", "Demir & Çelik", 25.1], ["KRDMD", "Kardemir Karabük Demir Çelik (D)", "Demir & Çelik", 28.65], ["KRGYO", "Körfez Gayrimenkul YO", "GYO", 11.4], ["KRONT", "Kron Teknoloji", "Yazılım & Siber Güvenlik", 28.9], ["KRPLS", "Koroplast Temizlik Ambalaj", "Ambalaj & Tüketim", 8.45], ["KRSTL", "Kristal Kola ve Meşrubat", "İçecek & Gıda", 7.9], ["KRTEK", "Karsu Tekstil Sanayi", "Tekstil", 24.6], ["KRVGD", "Kervan Gıda Sanayi", "Gıda", 2.48], ["KSTUR", "Kuştur Kuşadası Turizm", "Turizm", 2480.0], ["KTLEV", "Katılımevim Tasarruf Finansman", "Finans", 54.8], ["KTSKR", "Kütahya Şeker Fabrikası", "Gıda", 64.2], ["KUTPO", "Kütahya Porselen Sanayi", "Seramik & Porselen", 68.4], ["KUVVA", "Kuvva Gıda Ticaret", "Gıda", 44.5], ["KUYAS", "Kuyaş Yatırım A.Ş.", "GYO & Yatırım", 34.8], ["KZBGY", "Kızılbük Gayrimenkul YO", "GYO & Turizm", 21.4], ["KZGYO", "Kuzugrup Gayrimenkul YO", "GYO", 23.6], ["LIDER", "LDR Turizm A.Ş.", "Otomotiv & Kiralama", 118.4], ["LIDFA", "Lider Faktoring", "Faktoring & Finans", 8.95], ["LILAK", "Lila Kağıt Sanayi", "Kağıt & Tüketim", 28.4], ["LINK", "Link Bilgisayar Sistemleri", "Yazılım & Bilişim", 465.0], ["LKMNH", "Lokman Hekim Engürüsağ Sağlık", "Sağlık", 18.9], ["LMKDC", "Limak Doğu Anadolu Çimento", "Çimento & İnşaat", 28.6], ["LOGO", "Logo Yazılım Sanayi", "Yazılım & Bilişim", 114.5], ["LRSHO", "Loras Holding", "Holding", 3.45], ["LUKSK", "Lüks Kadife Ticaret", "Tekstil", 98.4], ["LYDHO", "Lydia Holding", "Holding", 142.0], ["LYDYE", "Lydia Yeşil Enerji Kaynakları", "Enerji", 68.5], ["MAALT", "Marmaris Altınyunus Turistik", "Turizm", 945.0], ["MACKO", "Mackolik İnternet Hizmetleri", "Medya & Teknoloji", 94.2], ["MAGEN", "Margün Enerji Üretim", "Enerji", 19.6], ["MAKIM", "Makim Makina Teknolojileri", "Makine", 18.4], ["MAKTK", "Makina Takım Endüstrisi", "Makine", 8.9], ["MANAS", "Manas Enerji Yönetimi", "Enerji & Sayaç", 14.6], ["MARBL", "Tureks Turunç Madencilik", "Madencilik & Mermer", 16.8], ["MARKA", "Marka Yatırım Holding", "Holding", 18.2], ["MARTI", "Martı Otel İşletmeleri", "Turizm", 3.68], ["MAVI", "Mavi Giyim Sanayi", "Perakende & Tekstil", 84.5], ["MEDTR", "Meditera Tıbbi Malzeme", "Sağlık", 44.6], ["MEGAP", "Mega Polietilen Köpük", "Kimya & Tekstil", 4.92], ["MEGMT", "Mega Metal Sanayi", "Metal & Bakır", 36.8], ["MEKAG", "Meka Global Makine İmalat", "Makine", 42.4], ["MENBA", "Menba Holding", "Holding", 48.9], ["MERCN", "Mercan Kimya Sanayi", "Kimya", 14.2], ["MERIT", "Merit Turizm Yatırım", "Turizm", 168.0], ["MERKO", "Merko Gıda Sanayi", "Gıda", 13.85], ["METRO", "Metro Ticari ve Mali Yatırımlar", "Holding", 2.94], ["METUR", "Metemtur Yatırım Enerji", "Turizm & Enerji", 16.4], ["MGROS", "Migros Ticaret A.Ş.", "Perakende", 512.0], ["MHRGY", "MHR Gayrimenkul YO", "GYO", 4.86], ["MIATK", "MIA Teknoloji", "Yazılım & Teknoloji", 42.6], ["MMCAS", "MMC Sanayi ve Ticari Yatırımlar", "Ticaret", 24.8], ["MNDRS", "Menderes Tekstil Sanayi", "Tekstil", 12.4], ["MNDTR", "Mondi Turkey Oluklu Mukavva", "Kağıt & Ambalaj", 5.84], ["MOBTL", "Mobiltel İletişim Hizmetleri", "Teknoloji & Dağıtım", 6.45], ["MOGAN", "Mogan Enerji Yatırım Holding", "Enerji", 10.9], ["MOPAS", "Mopaş Marketçilik Gıda", "Perakende", 34.2], ["MPARK", "MLP Sağlık Hizmetleri (Medical Park)", "Sağlık", 348.0], ["MRGYO", "Martı Gayrimenkul YO", "GYO", 2.48], ["MRSHL", "Marshall Boya ve Vernik", "Kimya & Boya", 1640.0], ["MSGYO", "Mistral Gayrimenkul YO", "GYO", 9.8], ["MTRKS", "Matriks Finansal Teknolojiler", "Yazılım & Finans", 36.4], ["MTRYO", "Metro Yatırım Ortaklığı", "Yatırım Ortaklığı", 8.95], ["MZHLD", "Mazhar Zorlu Holding", "Holding", 11.4], ["NATEN", "Naturel Yenilenebilir Enerji", "Enerji", 44.8], ["NETAS", "Netaş Telekomünikasyon", "Telekomünikasyon", 64.2], ["NIBAS", "Niğbaş Niğde Beton", "Çimento & Beton", 24.6], ["NTGAZ", "Naturelgaz Sanayi", "Enerji", 6.85], ["NTHOL", "Net Holding", "Turizm & Holding", 38.4], ["NUGYO", "Nurol Gayrimenkul YO", "GYO", 6.92], ["NUHCM", "Nuh Çimento Sanayi", "Çimento & İnşaat", 284.0], ["OBAMS", "Oba Makarnacılık Sanayi", "Gıda", 42.8], ["OBASE", "Obase Bilgisayar ve Danışmanlık", "Yazılım & Bilişim", 34.6], ["ODAS", "Odaş Elektrik Üretim", "Enerji", 6.48], ["ODINE", "Odine Solutions Teknoloji", "Yazılım & Telekom", 98.4], ["OFSYM", "Ofis Yem Gıda Sanayi", "Gıda & Tarım", 44.2], ["ONCSM", "Oncosem Onkolojik Sistemler", "Sağlık", 118.5], ["ONRYT", "Onur Yüksek Teknoloji", "Savunma & Teknoloji", 68.4], ["ORCAY", "Orçay Ortaköy Çay Sanayi", "Gıda", 14.8], ["ORGE", "Orge Enerji Elektrik Taahhüt", "İnşaat & Elektrik", 78.6], ["ORMA", "Orma Orman Mahsulleri", "Orman Ürünleri", 148.0], ["OSMEN", "Osmanlı Yatırım Menkul Değerler", "Finans", 24.6], ["OSTIM", "Ostim Endüstriyel Yatırımlar", "GYO & Sanayi", 7.42], ["OTKAR", "Otokar Otomotiv ve Savunma", "Otomotiv & Savunma", 468.0], ["OTTO", "Otto Holding", "Holding", 248.0], ["OYAKC", "Oyak Çimento Fabrikaları", "Çimento & İnşaat", 19.85], ["OYLUM", "Oylum Sınai Yatırımlar", "Gıda", 8.95], ["OYYAT", "Oyak Yatırım Menkul Değerler", "Finans", 26.4], ["OZATD", "Özata Denizcilik Sanayi", "Denizcilik & Tersane", 64.8], ["OZGYO", "Özderici Gayrimenkul YO", "GYO", 4.92], ["OZKGY", "Özak Gayrimenkul YO", "GYO", 11.45], ["OZRDN", "Özerden Ambalaj Sanayi", "Ambalaj", 18.6], ["OZSUB", "Özsu Balık Üretim", "Gıda & Su Ürünleri", 14.9], ["OZYSR", "Özyaşar Tel ve Galvanizleme", "Metal & Çelik", 26.8], ["PAGYO", "Panora Gayrimenkul YO", "GYO", 54.2], ["PAMEL", "Pamel Yenilenebilir Elektrik", "Enerji", 114.5], ["PAPIL", "Papilon Savunma-Güvenlik", "Savunma & Teknoloji", 19.8], ["PARSN", "Parsan Makina Parçaları", "Otomotiv Yan Sanayi", 118.4], ["PASEU", "Pasifik Eurasia Lojistik", "Lojistik", 42.6], ["PATEK", "Pasifik Teknoloji", "Yazılım & Teknoloji", 58.9], ["PCILT", "PC İletişim ve Medya", "Medya & Reklam", 19.4], ["PEGYO", "Pera Yatırım Holding", "Holding", 3.45], ["PEKGY", "Peker Gayrimenkul YO", "GYO", 1.84], ["PENGD", "Penguen Gıda Sanayi", "Gıda", 7.9], ["PENTA", "Penta Teknoloji Ürünleri", "Teknoloji & Dağıtım", 14.6], ["PETKM", "Petkim Petrokimya Holding", "Petrokimya", 19.42], ["PETUN", "Pınar Entegre Et ve Un", "Gıda", 11.8], ["PGSUS", "Pegasus Hava Taşımacılığı", "Havacılık", 234.5], ["PINSU", "Pınar Su ve İçecek", "İçecek & Gıda", 9.85], ["PKART", "Plastikkart Akıllı Kart İletişim", "Teknoloji", 68.4], ["PKENT", "Petrokent Turizm", "Turizm", 248.0], ["PLTUR", "Platform Turizm Taşımacılık", "Ulaşım & Turizm", 19.6], ["PNLSN", "Panelsan Çatı Cephe Sistemleri", "İnşaat Malzemeleri", 44.8], ["PNSUT", "Pınar Süt Mamulleri", "Gıda", 12.9], ["POLHO", "Polisan Holding", "Kimya & Holding", 12.45], ["POLTK", "Politeknik Metal Sanayi", "Kimya & Metal", 6850.0], ["PRDGS", "Pardus Girişim Sermayesi YO", "Girişim Sermayesi", 6.45], ["PRKAB", "Türk Prysmian Kablo", "Elektrik & Kablo", 42.8], ["PRKME", "Park Elektrik Üretim Madencilik", "Madencilik & Enerji", 19.6], ["PRZMA", "Prizma Pres Matbaacılık", "Basım & Yayın", 18.9], ["PSDTC", "Pergamon Status Dış Ticaret", "Dış Ticaret", 114.5], ["PSGYO", "Pasifik Gayrimenkul YO", "GYO", 2.18], ["QNBFK", "QNB Finans Finansal Kiralama", "Leasing & Finans", 34.8], ["QNBTR", "QNB Bank A.Ş.", "Bankacılık", 268.0], ["QUAGR", "QUA Granite Hayal Yapı", "Seramik & Yapı", 3.64], ["RALHY", "Ral Yatırım Holding", "Holding", 84.5], ["RAYSG", "Ray Sigorta A.Ş.", "Sigorta", 348.0], ["REEDR", "Reeder Teknoloji Sanayi", "Teknoloji & Elektronik", 18.4], ["RGYAS", "Rönesans Gayrimenkul Yatırım", "GYO", 118.5], ["RNPOL", "Rainbow Polikarbonat Sanayi", "Kimya & Plastik", 24.6], ["RODRG", "Rodrigo Tekstil Sanayi", "Tekstil", 28.9], ["ROYAL", "Royal Halı İplik Tekstil", "Tekstil", 12.4], ["RTALB", "RTA Laboratuvarları Biyolojik", "Sağlık & Biyoteknoloji", 14.85], ["RUBNS", "Rubenis Tekstil Sanayi", "Tekstil", 24.2], ["RYGYO", "Reysaş Gayrimenkul YO", "GYO & Lojistik", 14.65], ["RYSAS", "Reysaş Taşımacılık ve Lojistik", "Lojistik", 16.9], ["SAFKR", "Safkar Ege Soğutmacılık", "İklimlendirme", 34.8], ["SAHOL", "Hacı Ömer Sabancı Holding", "Holding", 94.6], ["SAMAT", "Saray Matbaacılık Kağıtçılık", "Basım & Kağıt", 26.4], ["SANEL", "San-El Mühendislik Elektrik", "Elektrik & Mühendislik", 21.8], ["SANFM", "Sanifoam Endüstri ve Tüketim", "Kimya & Sünger", 42.6], ["SANKO", "Sanko Pazarlama İthalat İhracat", "Tekstil & Ticaret", 24.9], ["SARKY", "Sarkuysan Elektrolitik Bakır", "Metal & Bakır", 21.4], ["SASA", "Sasa Polyester Sanayi", "Kimya & Polyester", 4.18], ["SAYAS", "Say Yenilenebilir Enerji Ekipmanları", "Enerji & Ekipman", 48.6], ["SDTTR", "SDT Uzay ve Savunma Teknolojileri", "Savunma & Uzay", 248.0], ["SEGMN", "Seğmen Kardeşler Gıda", "Gıda", 26.8], ["SEKFK", "Şeker Finansal Kiralama", "Leasing & Finans", 11.4], ["SEKUR", "Sekuro Plastik Ambalaj", "Ambalaj", 14.6], ["SELEC", "Selçuk Ecza Deposu", "İlaç & Sağlık", 64.8], ["SELGD", "Selçuk Gıda Endüstri", "Gıda", 19.4], ["SELVA", "Selva Gıda Sanayi", "Gıda", 11.85], ["SERNT", "Seranit Granit Seramik", "Seramik & Yapı", 12.6], ["SEYKM", "Seyitler Kimya Sanayi", "Kimya & İlaç", 14.2], ["SILVR", "Silverline Endüstri", "Dayanıklı Tüketim", 24.8], ["SISE", "Türkiye Şişe ve Cam Fabrikaları", "Cam & Holding", 42.6], ["SKBNK", "Şekerbank T.A.Ş.", "Bankacılık", 4.68], ["SKTAS", "Söktaş Tekstil Sanayi", "Tekstil", 4.92], ["SKYLP", "Skyalp Finansal Teknolojiler", "Finans & Teknoloji", 94.5], ["SKYMD", "Şeker Yatırım Menkul Değerler", "Finans", 8.45], ["SMART", "Smartiks Yazılım", "Yazılım & Bilişim", 26.4], ["SMRTG", "Smart Güneş Enerjisi Teknolojileri", "Enerji", 38.9], ["SNGYO", "Sinpaş Gayrimenkul YO", "GYO", 4.18], ["SNICA", "Sanica Isı Sanayi", "İnşaat Malzemeleri", 6.92], ["SNKRN", "Senkron Siber Güvenlik Yazılım", "Yazılım & Siber Güvenlik", 64.5], ["SNPAM", "Sönmez Pamuklu Sanayi", "Tekstil", 68.4], ["SODSN", "Sodaş Sodyum Sanayii", "Kimya", 94.2], ["SOKE", "Söke Değirmencilik Sanayi", "Gıda", 12.8], ["SOKM", "Şok Marketler Ticaret", "Perakende", 46.8], ["SONME", "Sönmez Filament Sentetik İplik", "Tekstil", 74.5], ["SRVGY", "Servet Gayrimenkul YO", "GYO", 268.0], ["SUMAS", "Sumaş Suni Tahta ve Mobilya", "Orman Ürünleri", 214.0], ["SUNTK", "Sun Tekstil Sanayi", "Tekstil", 28.9], ["SURGY", "Sur Tatil Evleri Gayrimenkul YO", "GYO & Turizm", 36.4], ["SUWEN", "Suwen Tekstil Sanayi", "Perakende & Tekstil", 24.8], ["TABGD", "Tab Gıda Sanayi ve Ticaret", "Restoran & Gıda", 148.5], ["TARKM", "Tarkim Bitki Koruma Sanayi", "Kimya & Tarım", 368.0], ["TATEN", "Tatlıpınar Enerji Üretim", "Enerji", 34.2], ["TATGD", "Tat Gıda Sanayi", "Gıda", 16.8], ["TAVHL", "TAV Havalimanları Holding", "Havacılık", 264.0], ["TBORG", "Türk Tuborg Bira ve Malt", "İçecek & Gıda", 124.5], ["TCELL", "Turkcell İletişim Hizmetleri", "Telekomünikasyon", 98.4], ["TCZYP", "Tera Yatırım Teknoloji Holding", "Teknoloji & Holding", 44.6], ["TDGYO", "Trend Gayrimenkul YO", "GYO", 11.4], ["TEKTU", "Tek-Art İnşaat Ticaret Turizm", "Turizm & İnşaat", 4.68], ["TERA", "Tera Yatırım Menkul Değerler", "Finans", 48.9], ["TETMT", "Tetamat Gıda Yatırımları", "Gıda", 4850.0], ["TEZOL", "Europap Tezol Kağıt Sanayi", "Kağıt & Tüketim", 16.85], ["TGSAS", "TGS Dış Ticaret", "Dış Ticaret", 38.4], ["THYAO", "Türk Hava Yolları A.O.", "Havacılık", 294.5], ["TKFEN", "Tekfen Holding", "Holding & İnşaat", 68.4], ["TKNSA", "Teknosa İç ve Dış Ticaret", "Perakende & Teknoloji", 29.6], ["TLMAN", "Trabzon Liman İşletmeciliği", "Liman & Lojistik", 84.5], ["TMPOL", "Temapol Polimer Plastik", "Kimya & Plastik", 68.2], ["TMSN", "Tümosan Motor ve Traktör", "Otomotiv & Makine", 114.5], ["TNZTP", "Tapdi Oksijen Özel Sağlık", "Sağlık", 34.8], ["TOASO", "Tofaş Türk Otomobil Fabrikası", "Otomotiv", 218.0], ["TRCAS", "Turcas Petrol A.Ş.", "Enerji & Holding", 26.4], ["TRGYO", "Torunlar Gayrimenkul YO", "GYO", 54.8], ["TRILC", "Turk İlaç ve Serum Sanayi", "İlaç & Sağlık", 21.4], ["TSGYO", "TSKB Gayrimenkul YO", "GYO", 10.85], ["TSKB", "Türkiye Sınai Kalkınma Bankası", "Bankacılık", 12.65], ["TSPOR", "Trabzonspor Sportif", "Spor", 1.14], ["TTKOM", "Türk Telekomünikasyon", "Telekomünikasyon", 48.6], ["TTRAK", "Türk Traktör ve Ziraat Makineleri", "Otomotiv & Tarım", 745.0], ["TUCLK", "Tuğçelik Alüminyum ve Metal", "Metal & Alüminyum", 11.4], ["TUKAS", "Tukaş Gıda Sanayi", "Gıda", 6.85], ["TUPRS", "Tüpraş Türkiye Petrol Rafinerileri", "Enerji & Rafineri", 156.4], ["TUREX", "Tureks Turizm Taşımacılık", "Ulaşım & Turizm", 14.9], ["TURGG", "Türker Proje Gayrimenkul", "GYO", 48.6], ["TURSG", "Türkiye Sigorta A.Ş.", "Sigorta", 14.85], ["UFUK", "Ufuk Yatırım Yönetim ve Gayrimenkul", "GYO & Yatırım", 268.0], ["ULAS", "Ulaşlar Turizm Yatırımları", "Turizm", 21.4], ["ULKER", "Ülker Bisküvi Sanayi", "Gıda", 128.5], ["ULUFA", "Ulusal Faktoring", "Faktoring & Finans", 11.8], ["ULUSE", "Ulusoy Elektrik İmalat", "Elektrik & Enerji", 148.0], ["ULUUN", "Ulusoy Un Sanayi", "Gıda", 24.6], ["UMPAS", "Umpaş Holding", "Holding", 4.18], ["UNLU", "Ünlü Yatırım Holding", "Finans & Holding", 14.9], ["USAK", "Uşak Seramik Sanayi", "Seramik & Yapı", 2.48], ["UZERB", "Uzertaş Boya Sanayi", "Kimya & Boya", 168.0], ["VAKBN", "Türkiye Vakıflar Bankası", "Bankacılık", 23.4], ["VAKFN", "Vakıf Finansal Kiralama", "Leasing & Finans", 2.94], ["VAKKO", "Vakko Tekstil ve Hazır Giyim", "Perakende & Tekstil", 78.6], ["VANGD", "Vanet Gıda Sanayi", "Gıda", 19.4], ["VBTYZ", "VBT Yazılım A.Ş.", "Yazılım & Bilişim", 26.8], ["VERTU", "Verusaturk Girişim Sermayesi YO", "Girişim Sermayesi", 38.4], ["VERUS", "Verusa Holding", "Holding", 248.0], ["VESBE", "Vestel Beyaz Eşya Sanayi", "Dayanıklı Tüketim", 16.45], ["VESTL", "Vestel Elektronik Sanayi", "Dayanıklı Tüketim", 64.2], ["VKFYO", "Vakıf Menkul Kıymet YO", "Yatırım Ortaklığı", 14.8], ["VKGYO", "Vakıf Gayrimenkul YO", "GYO", 2.38], ["VKING", "Viking Kağıt ve Selüloz", "Kağıt & Tüketim", 28.9], ["VRGYO", "Vera Konsept Gayrimenkul YO", "GYO", 3.12], ["VSNMD", "Vişne Madencilik Üretim", "Madencilik", 68.5], ["YAPRK", "Yaprak Süt ve Besi Çiftlikleri", "Gıda & Tarım", 198.0], ["YATAS", "Yataş Yatak ve Yorgan Sanayi", "Mobilya", 26.4], ["YAYLA", "Yayla Enerji Üretim Turizm", "Enerji & Turizm", 11.4], ["YBTAS", "Yibitaş Yozgat İşçi Birliği İnşaat", "Çimento & İnşaat", 68500.0], ["YEOTK", "Yeo Teknoloji Enerji", "Enerji & Teknoloji", 48.6], ["YESIL", "Yeşil Yatırım Holding", "Holding", 3.45], ["YGGYO", "Yeni Gimat Gayrimenkul YO", "GYO", 54.8], ["YGYO", "Yeşil Gayrimenkul YO", "GYO", 4.92], ["YIGIT", "Yiğit Akü Malzemeleri", "Otomotiv & Enerji", 46.8], ["YKBNK", "Yapı ve Kredi Bankası", "Bankacılık", 29.85], ["YKSLN", "Yükselen Çelik A.Ş.", "Demir & Çelik", 14.6], ["YONGA", "Yonga Mobilya Sanayi", "Mobilya", 48.9], ["YUNSA", "Yünsa Yünlü Sanayi", "Tekstil", 9.85], ["YYAPI", "Yeşil Yapı Endüstrisi", "İnşaat", 2.64], ["YYLGD", "Yayla Agro Gıda Sanayi", "Gıda", 11.45], ["ZEDUR", "Zedur Enerji Elektrik Üretim", "Enerji", 10.85], ["ZOREN", "Zorlu Enerji Elektrik Üretim", "Enerji", 4.38], ["ZRGYO", "Ziraat Gayrimenkul YO", "GYO", 9.65]];
+    const INITIAL_US_DATA = [["AAPL", "Apple Inc.", "Teknoloji", 228.5], ["MSFT", "Microsoft Corporation", "Teknoloji", 425.2], ["NVDA", "NVIDIA Corporation", "Yarı İletken & AI", 142.6], ["AMZN", "Amazon.com Inc.", "E-Ticaret & Bulut", 206.4], ["GOOGL", "Alphabet Inc. (Class A)", "Teknoloji & İletişim", 176.8], ["GOOG", "Alphabet Inc. (Class C)", "Teknoloji & İletişim", 178.1], ["META", "Meta Platforms Inc.", "Sosyal Medya & AI", 574.3], ["TSLA", "Tesla Inc.", "Otomotiv & Enerji", 338.5], ["BRK.B", "Berkshire Hathaway Inc.", "Finans & Holding", 468.2], ["AVGO", "Broadcom Inc.", "Yarı İletken", 169.4], ["TSM", "Taiwan Semiconductor (TSMC)", "Yarı İletken", 191.2], ["LLY", "Eli Lilly and Company", "İlaç & Sağlık", 765.0], ["WMT", "Walmart Inc.", "Perakende", 86.4], ["JPM", "JPMorgan Chase & Co.", "Bankacılık", 244.8], ["V", "Visa Inc.", "Finans & Ödeme", 309.5], ["UNH", "UnitedHealth Group Inc.", "Sağlık Sigortası", 594.2], ["XOM", "Exxon Mobil Corporation", "Enerji & Petrol", 119.6], ["ORCL", "Oracle Corporation", "Yazılım & Bulut", 186.7], ["MA", "Mastercard Incorporated", "Finans & Ödeme", 522.4], ["COST", "Costco Wholesale Corporation", "Perakende", 932.0], ["HD", "The Home Depot Inc.", "Perakende & Yapı", 412.3], ["PG", "Procter & Gamble Co.", "Tüketim Ürünleri", 171.8], ["NFLX", "Netflix Inc.", "Medya & Eğlence", 845.6], ["JNJ", "Johnson & Johnson", "İlaç & Sağlık", 154.9], ["BAC", "Bank of America Corp.", "Bankacılık", 46.3], ["ABBV", "AbbVie Inc.", "İlaç & Biyoteknoloji", 174.5], ["CRM", "Salesforce Inc.", "Yazılım & Bulut", 328.4], ["CVX", "Chevron Corporation", "Enerji & Petrol", 161.2], ["KO", "The Coca-Cola Company", "İçecek & Gıda", 63.4], ["AMD", "Advanced Micro Devices", "Yarı İletken", 139.8], ["ASML", "ASML Holding N.V.", "Yarı İletken Ekipman", 682.5], ["MRK", "Merck & Co. Inc.", "İlaç & Sağlık", 99.4], ["PEP", "PepsiCo Inc.", "İçecek & Gıda", 162.8], ["TMO", "Thermo Fisher Scientific", "Sağlık & Bilim", 526.4], ["ADBE", "Adobe Inc.", "Yazılım", 508.9], ["CSCO", "Cisco Systems Inc.", "Ağ & Telekom", 57.8], ["ACN", "Accenture plc", "BT Danışmanlık", 356.2], ["MCD", "McDonald's Corporation", "Restoran & Gıda", 294.6], ["LIN", "Linde plc", "Endüstriyel Gaz", 456.8], ["WFC", "Wells Fargo & Company", "Bankacılık", 73.9], ["ABT", "Abbott Laboratories", "Sağlık & Tıbbi Cihaz", 116.4], ["DHR", "Danaher Corporation", "Sağlık & Bilim", 236.5], ["TXN", "Texas Instruments Inc.", "Yarı İletken", 204.3], ["PM", "Philip Morris International", "Tüketim", 131.2], ["QCOM", "QUALCOMM Incorporated", "Yarı İletken", 164.5], ["INTU", "Intuit Inc.", "Finansal Yazılım", 648.0], ["IBM", "International Business Machines", "Teknoloji & AI", 214.6], ["GE", "GE Aerospace", "Havacılık & Savunma", 182.4], ["CAT", "Caterpillar Inc.", "Ağır Makine", 388.9], ["NOW", "ServiceNow Inc.", "Yazılım & Bulut", 1024.0], ["ISRG", "Intuitive Surgical Inc.", "Tıbbi Robotik", 534.2], ["VZ", "Verizon Communications", "Telekomünikasyon", 42.1], ["DIS", "The Walt Disney Company", "Medya & Eğlence", 114.8], ["AMGN", "Amgen Inc.", "Biyoteknoloji", 286.4], ["GS", "The Goldman Sachs Group", "Yatırım Bankacılığı", 588.6], ["MS", "Morgan Stanley", "Yatırım Bankacılığı", 132.4], ["SPGI", "S&P Global Inc.", "Finansal Veri", 506.8], ["UBER", "Uber Technologies Inc.", "Ulaşım & Teknoloji", 72.4], ["NEE", "NextEra Energy Inc.", "Yenilenebilir Enerji", 76.8], ["RTX", "RTX Corporation", "Havacılık & Savunma", 119.5], ["PFE", "Pfizer Inc.", "İlaç & Sağlık", 25.8], ["T", "AT&T Inc.", "Telekomünikasyon", 22.9], ["UNP", "Union Pacific Corporation", "Demiryolu & Lojistik", 242.6], ["LOW", "Lowe's Companies Inc.", "Perakende & Yapı", 268.4], ["HON", "Honeywell International", "Sanayi & Otomasyon", 224.8], ["BLK", "BlackRock Inc.", "Varlık Yönetimi", 1028.0], ["BKNG", "Booking Holdings Inc.", "Turizm & Teknoloji", 5120.0], ["SYK", "Stryker Corporation", "Tıbbi Cihaz", 384.5], ["ETN", "Eaton Corporation plc", "Enerji Yönetimi", 358.2], ["C", "Citigroup Inc.", "Bankacılık", 69.4], ["AXP", "American Express Company", "Finans & Ödeme", 292.6], ["PLTR", "Palantir Technologies", "Yapay Zeka & Savunma", 62.4], ["ARM", "Arm Holdings plc", "Yarı İletken", 138.9], ["MU", "Micron Technology Inc.", "Yarı İletken & Bellek", 102.4], ["AMAT", "Applied Materials Inc.", "Yarı İletken Ekipman", 174.6], ["LRCX", "Lam Research Corporation", "Yarı İletken Ekipman", 74.8], ["KLAC", "KLA Corporation", "Yarı İletken Ekipman", 648.5], ["PANW", "Palo Alto Networks Inc.", "Siber Güvenlik", 386.4], ["CRWD", "CrowdStrike Holdings", "Siber Güvenlik", 348.2], ["SNPS", "Synopsys Inc.", "Yazılım & Çip Tasarımı", 542.0], ["CDNS", "Cadence Design Systems", "Yazılım & Çip Tasarımı", 296.4], ["ANET", "Arista Networks Inc.", "Ağ & Bulut", 398.5], ["SHOP", "Shopify Inc.", "E-Ticaret Yazılımı", 108.4], ["SQ", "Block Inc.", "Fintech & Ödeme", 88.6], ["PYPL", "PayPal Holdings Inc.", "Fintech & Ödeme", 85.4], ["COIN", "Coinbase Global Inc.", "Kripto & Finans", 296.8], ["MSTR", "MicroStrategy Incorporated", "Yazılım & Bitcoin", 384.0], ["SNOW", "Snowflake Inc.", "Bulut Veri", 128.4], ["NET", "Cloudflare Inc.", "Bulut & Güvenlik", 96.8], ["DDOG", "Datadog Inc.", "Bulut İzleme", 129.4], ["ZS", "Zscaler Inc.", "Siber Güvenlik", 204.6], ["MDB", "MongoDB Inc.", "Veritabanı Yazılımı", 284.5], ["ABNB", "Airbnb Inc.", "Turizm & Teknoloji", 136.8], ["DASH", "DoorDash Inc.", "Teslimat & Teknoloji", 172.4], ["SPOT", "Spotify Technology S.A.", "Müzik & Medya", 468.5], ["ROKU", "Roku Inc.", "Medya & Yayın", 74.2], ["RBLX", "Roblox Corporation", "Oyun & Metaverse", 52.8], ["EA", "Electronic Arts Inc.", "Oyun", 162.4], ["TTWO", "Take-Two Interactive", "Oyun", 184.6], ["NKE", "NIKE Inc.", "Spor Giyim", 76.8], ["SBUX", "Starbucks Corporation", "Restoran & Kahve", 99.4], ["CMG", "Chipotle Mexican Grill", "Restoran & Gıda", 61.2], ["TGT", "Target Corporation", "Perakende", 154.6], ["BA", "The Boeing Company", "Havacılık & Savunma", 146.8], ["LMT", "Lockheed Martin Corp.", "Savunma & Uzay", 538.4], ["NOC", "Northrop Grumman Corp.", "Savunma & Uzay", 496.2], ["GD", "General Dynamics Corp.", "Savunma & Havacılık", 284.6], ["F", "Ford Motor Company", "Otomotiv", 11.15], ["GM", "General Motors Company", "Otomotiv", 56.4], ["RIVN", "Rivian Automotive Inc.", "Elektrikli Araç", 10.45], ["LCID", "Lucid Group Inc.", "Elektrikli Araç", 2.18], ["NIO", "NIO Inc. (ADR)", "Elektrikli Araç", 4.65], ["BABA", "Alibaba Group Holding", "E-Ticaret & Teknoloji", 89.4], ["PDD", "PDD Holdings Inc.", "E-Ticaret", 114.6], ["JD", "JD.com Inc.", "E-Ticaret", 36.8], ["INTC", "Intel Corporation", "Yarı İletken", 24.4], ["SMCI", "Super Micro Computer", "AI Sunucu & Donanım", 28.6], ["DELL", "Dell Technologies Inc.", "Bilgisayar & Sunucu", 136.4], ["HPQ", "HP Inc.", "Bilgisayar & Yazıcı", 37.8], ["GILD", "Gilead Sciences Inc.", "Biyoteknoloji", 89.6]];
+
+    const INITIAL_MACRO_DATA = {
+      XU030: { key: 'XU030', label: 'BIST 30', unit: '', value: 10420.50, changePct: 0.0, group: 'index' },
+      XU100: { key: 'XU100', label: 'BIST 100', unit: '', value: 9415.80, changePct: 0.0, group: 'index' },
+      XUTUM: { key: 'XUTUM', label: 'BIST Tüm', unit: '', value: 10890.20, changePct: 0.0, group: 'index' },
+      USDTRY: { key: 'USDTRY', label: 'Dolar ($)', unit: '₺', value: 34.45, changePct: 0.0, group: 'fx' },
+      EURTRY: { key: 'EURTRY', label: 'Euro (€)', unit: '₺', value: 36.42, changePct: 0.0, group: 'fx' },
+      XAUUSD: { key: 'XAUUSD', label: 'Ons Altın', unit: '$', value: 2635.00, changePct: 0.0, group: 'fx' },
+      GRAM_ALTIN: { key: 'GRAM_ALTIN', label: 'Gram Altın', unit: '₺', value: 2918.40, changePct: 0.0, group: 'fx' },
+      CEYREK_ALTIN: { key: 'CEYREK_ALTIN', label: 'Çeyrek Altın', unit: '₺', value: 4771.50, changePct: 0.0, group: 'fx' }
+    };
+
+    // =========================================================================
+    // 2. PERSISTENT STORAGE KEYS (v6 WITH AUTOMATIC v5 MIGRATION)
+    // =========================================================================
+    const KEYS = {
+      USERS: 'bist_us_users_v6',
+      ACTIVE_USER: 'bist_us_active_user_v6',
+      PRICES: 'bist_us_prices_v6',
+      MACRO: 'bist_us_macro_v6',
+      MANUAL_PRICES: 'bist_us_manual_v6',
+      FAVS_PREFIX: 'bist_us_favs_v6_',
+      GROUPS_PREFIX: 'bist_us_groups_v6_',
+      STATE_PREFIX: 'bist_us_state_v6_'
+    };
+
+    // Seamless one-time migration from v5 so existing user groups/balances/favorites carry over
+    (function migrateV5ToV6() {
+      try {
+        if (!localStorage.getItem(KEYS.USERS) && localStorage.getItem('bist_us_users_v5')) {
+          localStorage.setItem(KEYS.USERS, localStorage.getItem('bist_us_users_v5'));
+          const act = localStorage.getItem('bist_us_active_user_v5');
+          if (act) localStorage.setItem(KEYS.ACTIVE_USER, act);
+          if (localStorage.getItem('bist_us_manual_v5')) {
+            localStorage.setItem(KEYS.MANUAL_PRICES, localStorage.getItem('bist_us_manual_v5'));
+          }
+          const users = JSON.parse(localStorage.getItem('bist_us_users_v5') || '[]');
+          users.forEach(u => {
+            const un = u.username;
+            ['favs', 'groups', 'state'].forEach(kind => {
+              const oldVal = localStorage.getItem(`bist_us_${kind}_v5_${un}`);
+              if (oldVal) localStorage.setItem(`bist_us_${kind}_v6_${un}`, oldVal);
+            });
+          });
+        }
+      } catch (e) {}
+    })();
+
+    let allAssetsMap = new Map();
+    let bistArray = [];
+    let usArray = [];
+    let macroMap = new Map();
+    let currentUser = null;
+
+    let diagnostics = {
+      bist: 'Bekleniyor...',
+      us: 'Bekleniyor...',
+      macro: 'Bekleniyor...'
+    };
+
+    let uiState = {
+      activeTab: 'tab-home',
+      bistFilter: 'all',
+      bistSector: 'ALL',
+      bistSearch: '',
+      bistSortKey: 'symbol',
+      bistSortDir: 'asc',
+      usFilter: 'all',
+      usSector: 'ALL',
+      usSearch: '',
+      usSortKey: 'symbol',
+      usSortDir: 'asc',
+      favSearch: '',
+      selectedGroupId: null,
+      refreshInterval: '10000'
+    };
+
+    let refreshTimer = null;
+    let modalTargetId = null;
+    let editTargetId = null;
+
+    function parseDecimalInput(raw) {
+      if (raw === null || raw === undefined) return NaN;
+      const cleaned = String(raw).trim().replace(',', '.');
+      if (cleaned === '') return NaN;
+      return Number(cleaned);
+    }
+
+    function showToast(msg) {
+      const el = document.getElementById('toast');
+      el.textContent = msg;
+      el.style.display = 'block';
+      clearTimeout(el._timer);
+      el._timer = setTimeout(() => {
+        el.style.display = 'none';
+      }, 2200);
+    }
+
+    // =========================================================================
+    // 3. USER AUTHENTICATION (DEFAULT: engin / 7475)
+    // =========================================================================
+    function getUsers() {
+      const raw = localStorage.getItem(KEYS.USERS);
+      if (!raw) {
+        const defaults = [
+          { username: 'engin', password: '7475', role: 'Yönetici', createdAt: new Date().toLocaleDateString('tr-TR') }
+        ];
+        localStorage.setItem(KEYS.USERS, JSON.stringify(defaults));
+        return defaults;
+      }
+      return JSON.parse(raw);
+    }
+
+    function saveUsers(users) {
+      localStorage.setItem(KEYS.USERS, JSON.stringify(users));
+      renderUsersSection();
+    }
+
+    document.getElementById('login-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const uname = document.getElementById('login-username').value.trim();
+      const pass = document.getElementById('login-password').value;
+      const users = getUsers();
+      const found = users.find(u => u.username.toLowerCase() === uname.toLowerCase() && u.password === pass);
+      if (found) {
+        document.getElementById('login-error').style.display = 'none';
+        enterApp(found.username);
+      } else {
+        document.getElementById('login-error').style.display = 'block';
+      }
+    });
+
+    function enterApp(username) {
+      currentUser = username;
+      localStorage.setItem(KEYS.ACTIVE_USER, username);
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('app-shell').style.display = 'block';
+      document.getElementById('active-username-label').textContent = username;
+      loadUserUiState();
+      initAllDataFromStorage();
+      applySavedUiState();
+      renderUsersSection();
+      renderHomeView();
+      renderBistView();
+      renderUsView();
+      renderGroupsView(true);
+      renderGroupContentsView();
+      fetchAllLiveMarkets();
+      setupAutoRefresh();
+    }
+
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      localStorage.removeItem(KEYS.ACTIVE_USER);
+      currentUser = null;
+      if (refreshTimer) clearInterval(refreshTimer);
+      document.getElementById('app-shell').style.display = 'none';
+      document.getElementById('login-screen').style.display = 'flex';
+      document.getElementById('login-password').value = '';
+    });
+
+    // =========================================================================
+    // 4. STORAGE HELPERS (PERSISTENT GROUPS, BALANCES, FAVORITES, PRICES)
+    // =========================================================================
+    function loadUserUiState() {
+      const raw = localStorage.getItem(KEYS.STATE_PREFIX + currentUser);
+      if (raw) {
+        try {
+          uiState = { ...uiState, ...JSON.parse(raw) };
+        } catch (e) {}
+      }
+    }
+
+    
+    // =========================================================================
+    // 15. TAB 6: GROUP CONTENTS (GRUP İÇERİKLERİ)
+    // =========================================================================
+    function renderGroupContentsView() {
+      const groups = getUserGroups();
+      document.getElementById('badge-contents').textContent = groups.reduce((acc, g) => acc + g.holdings.length, 0);
+
+      const pillsEl = document.getElementById('contents-group-pills');
+      const listEl = document.getElementById('contents-stocks-list');
+
+      if (groups.length === 0) {
+        pillsEl.innerHTML = '';
+        listEl.innerHTML = '<div style="padding:22px; text-align:center; color:var(--text-secondary); font-size:12.5px;">Henüz grup bulunmuyor.</div>';
+        return;
+      }
+
+      // Ensure selected contents group ID exists
+      if (!uiState.contentsGroupId || !groups.some(g => g.id === uiState.contentsGroupId)) {
+        uiState.contentsGroupId = groups[0].id;
+      }
+
+      pillsEl.innerHTML = groups.map(g => {
+        const isAct = g.id === uiState.contentsGroupId;
+        return `<button class="chip ${isAct ? 'active' : ''}" onclick="selectContentsGroup('${g.id}')">
+          ${g.name} (${g.holdings.length})
+        </button>`;
+      }).join('');
+
+      const activeGrp = groups.find(g => g.id === uiState.contentsGroupId) || groups[0];
+      if (!activeGrp.holdings || activeGrp.holdings.length === 0) {
+        listEl.innerHTML = `<div style="padding:22px; text-align:center; color:var(--text-secondary); font-size:12.5px;">"${activeGrp.name}" grubunda henüz hisse yok.</div>`;
+        return;
+      }
+
+      listEl.innerHTML = activeGrp.holdings.map(h => {
+        const id = h.assetId || (allAssetsMap.has('BIST:' + h.symbol) ? 'BIST:' + h.symbol : 'US:' + h.symbol);
+        const s = allAssetsMap.get(id) || { symbol: h.symbol, name: h.symbol, price: 0, changePct: 0, currency: '₺', market: 'BIST', sector: '' };
+        const cls = getPctClass(s.changePct);
+        const sign = s.changePct > 0 ? '+' : '';
+        const w = Number(h.weight) || 0;
+
+        return `<div class="stock-row ${s.flash || ''}" style="padding:8px 11px;">
+          <div class="stock-row-left">
+            <div class="stock-info">
+              <div class="stock-code-line">
+                <span class="ticker" style="font-size:13.5px;">${s.symbol}</span>
+                <span class="market-pill ${s.market === 'BIST' ? 'bist' : ''}">${s.market === 'BIST' ? 'BIST' : 'ABD'}</span>
+                <span style="font-size:10.5px; color:var(--accent); font-weight:700; background:rgba(59,130,246,0.12); padding:1px 5px; border-radius:4px;">Ağırlık: %${fmt(w)}</span>
+              </div>
+              <div class="company-sub" style="font-size:11px;">${s.name}</div>
+            </div>
+          </div>
+          <div class="stock-row-right">
+            <div class="price-block" onclick="openEditAssetSheet('${s.id}')" title="Fiyatı Düzenle" style="padding:1px 3px;">
+              <div class="price-val" style="font-size:13px;">${fmt(s.price)} ${s.currency}</div>
+              <div class="diff-sub" style="font-size:10px;">${s.changeAbs > 0 ? '+' : ''}${fmt(s.changeAbs)}</div>
+            </div>
+            <div class="pct-badge ${cls}" onclick="openEditAssetSheet('${s.id}')" style="font-size:11.5px; padding:3px 6px; min-width:60px;">${sign}%${fmt(s.changePct)}</div>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    window.selectContentsGroup = function(groupId) {
+      uiState.contentsGroupId = groupId;
+      saveUserUiState();
+      renderGroupContentsView();
+    };
+
+    function saveUserUiState() {
+      if (!currentUser) return;
+      localStorage.setItem(KEYS.STATE_PREFIX + currentUser, JSON.stringify(uiState));
+    }
+
+    function applySavedUiState() {
+      document.getElementById('bist-search-input').value = uiState.bistSearch || '';
+      document.getElementById('us-search-input').value = uiState.usSearch || '';
+      document.getElementById('fav-search-input').value = uiState.favSearch || '';
+      document.getElementById('refresh-interval-select').value = uiState.refreshInterval || '10000';
+
+      document.querySelectorAll('.chip[data-bist-filter]').forEach(c => {
+        c.classList.toggle('active', c.dataset.bistFilter === uiState.bistFilter);
+      });
+      document.querySelectorAll('.chip[data-us-filter]').forEach(c => {
+        c.classList.toggle('active', c.dataset.usFilter === uiState.usFilter);
+      });
+
+      switchTab(uiState.activeTab || 'tab-home', false);
+    }
+
+    function getUserFavorites() {
+      const raw = localStorage.getItem(KEYS.FAVS_PREFIX + currentUser);
+      if (!raw) {
+        const defaults = ['BIST:A1CAP', 'BIST:ACSEL', 'BIST:THYAO', 'BIST:ASELS', 'US:NVDA', 'US:AAPL'];
+        localStorage.setItem(KEYS.FAVS_PREFIX + currentUser, JSON.stringify(defaults));
+        return defaults;
+      }
+      return JSON.parse(raw);
+    }
+
+    function saveUserFavorites(favs) {
+      localStorage.setItem(KEYS.FAVS_PREFIX + currentUser, JSON.stringify(favs));
+      document.getElementById('home-fav-count').textContent = favs.length;
+    }
+
+    window.toggleFavorite = function(assetId) {
+      let favs = getUserFavorites();
+      const asset = allAssetsMap.get(assetId);
+      const label = asset ? asset.symbol : assetId;
+      if (favs.includes(assetId)) {
+        favs = favs.filter(id => id !== assetId);
+        showToast(`${label} favorilerden çıkarıldı`);
+      } else {
+        favs.push(assetId);
+        showToast(`${label} ana ekran favorilerine eklendi ★`);
+      }
+      saveUserFavorites(favs);
+      renderHomeView();
+      renderBistView();
+      renderUsView();
+    };
+
+    function ensureGroupHoldingsAreFavorites(groups) {
+      try {
+        let favs = getUserFavorites();
+        let changed = false;
+        groups.forEach(g => {
+          if (g && g.holdings) {
+            g.holdings.forEach(h => {
+              const id = h.assetId || ('BIST:' + h.symbol);
+              if (id && !favs.includes(id)) {
+                favs.push(id);
+                changed = true;
+              }
+            });
+          }
+        });
+        if (changed) {
+          saveUserFavorites(favs);
+        }
+      } catch (e) {}
+    }
+
+    function removeAssetFromFavsIfNotInAnyGroup(assetId, groups) {
+      try {
+        let inAnyGroup = false;
+        groups.forEach(g => {
+          if (g && g.holdings) {
+            g.holdings.forEach(h => {
+              const id = h.assetId || ('BIST:' + h.symbol);
+              if (id === assetId) inAnyGroup = true;
+            });
+          }
+        });
+        if (!inAnyGroup) {
+          let favs = getUserFavorites();
+          if (favs.includes(assetId)) {
+            favs = favs.filter(id => id !== assetId);
+            saveUserFavorites(favs);
+          }
+        }
+      } catch (e) {}
+    }
+
+    function getUserGroups() {
+      const raw = localStorage.getItem(KEYS.GROUPS_PREFIX + currentUser);
+      if (!raw) {
+        const initialGroups = [
+          {
+            id: 'grp_1',
+            name: '1. Grup',
+            capital: null,
+            holdings: [
+              { assetId: 'BIST:THYAO', weight: 50 },
+              { assetId: 'BIST:ASELS', weight: 50 }
+            ]
+          }
+        ];
+        localStorage.setItem(KEYS.GROUPS_PREFIX + currentUser, JSON.stringify(initialGroups));
+        ensureGroupHoldingsAreFavorites(initialGroups);
+        return initialGroups;
+      }
+      const groups = JSON.parse(raw);
+      ensureGroupHoldingsAreFavorites(groups);
+      return groups;
+    }
+
+    function saveUserGroups(groups, rebuildHoldingsDom = true) {
+      localStorage.setItem(KEYS.GROUPS_PREFIX + currentUser, JSON.stringify(groups));
+      document.getElementById('badge-groups').textContent = groups.length;
+      renderGroupsView(rebuildHoldingsDom);
+      renderHomeView();
+    }
+
+    function getManualOverrides() {
+      try {
+        return JSON.parse(localStorage.getItem(KEYS.MANUAL_PRICES) || '{}');
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveManualOverrides(obj) {
+      localStorage.setItem(KEYS.MANUAL_PRICES, JSON.stringify(obj));
+    }
+
+    function saveSnapshots() {
+      const pObj = {};
+      allAssetsMap.forEach((val, key) => {
+        pObj[key] = {
+          prevClose: val.prevClose,
+          price: val.price,
+          changePct: val.changePct,
+          changeAbs: val.changeAbs
+        };
+      });
+      const mObj = {};
+      macroMap.forEach((val, key) => {
+        mObj[key] = { value: val.value, changePct: val.changePct };
+      });
+      try {
+        localStorage.setItem(KEYS.PRICES, JSON.stringify(pObj));
+        localStorage.setItem(KEYS.MACRO, JSON.stringify(mObj));
+      } catch (e) {}
+    }
+
+    function initAllDataFromStorage() {
+      allAssetsMap.clear();
+      macroMap.clear();
+      let savedPrices = {};
+      let savedMacro = {};
+      try {
+        savedPrices = JSON.parse(localStorage.getItem(KEYS.PRICES) || '{}');
+        savedMacro = JSON.parse(localStorage.getItem(KEYS.MACRO) || '{}');
+      } catch (e) {}
+      const overrides = getManualOverrides();
+
+      Object.values(INITIAL_MACRO_DATA).forEach(item => {
+        const ov = overrides['MACRO:' + item.key];
+        const prev = savedMacro[item.key];
+        if (ov && typeof ov.price === 'number') {
+          macroMap.set(item.key, { ...item, value: ov.price, changePct: ov.changePct ?? 0, isManual: true });
+        } else if (prev && typeof prev.value === 'number') {
+          macroMap.set(item.key, { ...item, value: prev.value, changePct: prev.changePct ?? 0, isManual: false });
+        } else {
+          macroMap.set(item.key, { ...item, isManual: false });
+        }
+      });
+
+      INITIAL_BIST_DATA.forEach(([symbol, name, sector, basePrice]) => {
+        const id = 'BIST:' + symbol;
+        const ov = overrides[id];
+        const prev = savedPrices[id];
+        if (ov && typeof ov.price === 'number') {
+          const chgAbs = +(ov.price - (ov.prevClose || ov.price)).toFixed(2);
+          allAssetsMap.set(id, {
+            id, market: 'BIST', currency: '₺', symbol, name, sector,
+            prevClose: ov.prevClose || ov.price, price: ov.price,
+            changePct: ov.changePct ?? 0, changeAbs: chgAbs, isManual: true, flash: ''
+          });
+        } else if (prev && typeof prev.price === 'number') {
+          allAssetsMap.set(id, {
+            id, market: 'BIST', currency: '₺', symbol, name, sector,
+            prevClose: prev.prevClose || basePrice, price: prev.price,
+            changePct: prev.changePct || 0, changeAbs: prev.changeAbs || 0, isManual: false, flash: ''
+          });
+        } else {
+          allAssetsMap.set(id, {
+            id, market: 'BIST', currency: '₺', symbol, name, sector,
+            prevClose: basePrice, price: basePrice, changePct: 0, changeAbs: 0, isManual: false, flash: ''
+          });
+        }
+      });
+
+      INITIAL_US_DATA.forEach(([symbol, name, sector, basePrice]) => {
+        const id = 'US:' + symbol;
+        const ov = overrides[id];
+        const prev = savedPrices[id];
+        if (ov && typeof ov.price === 'number') {
+          const chgAbs = +(ov.price - (ov.prevClose || ov.price)).toFixed(2);
+          allAssetsMap.set(id, {
+            id, market: 'US', currency: '$', symbol, name, sector,
+            prevClose: ov.prevClose || ov.price, price: ov.price,
+            changePct: ov.changePct ?? 0, changeAbs: chgAbs, isManual: true, flash: ''
+          });
+        } else if (prev && typeof prev.price === 'number') {
+          allAssetsMap.set(id, {
+            id, market: 'US', currency: '$', symbol, name, sector,
+            prevClose: prev.prevClose || basePrice, price: prev.price,
+            changePct: prev.changePct || 0, changeAbs: prev.changeAbs || 0, isManual: false, flash: ''
+          });
+        } else {
+          allAssetsMap.set(id, {
+            id, market: 'US', currency: '$', symbol, name, sector,
+            prevClose: basePrice, price: basePrice, changePct: 0, changeAbs: 0, isManual: false, flash: ''
+          });
+        }
+      });
+
+      syncArraysAndFilters();
+    }
+
+    function syncArraysAndFilters() {
+      bistArray = [];
+      usArray = [];
+      allAssetsMap.forEach(item => {
+        if (item.market === 'BIST') bistArray.push(item);
+        else if (item.market === 'US') usArray.push(item);
+      });
+      document.getElementById('badge-bist').textContent = bistArray.length;
+      document.getElementById('badge-us').textContent = usArray.length;
+
+      const bistSectors = Array.from(new Set(bistArray.map(s => s.sector))).sort((a, b) => a.localeCompare(b, 'tr'));
+      document.getElementById('bist-sector-filter').innerHTML =
+        `<option value="ALL">Sektörler (${bistSectors.length})</option>` +
+        bistSectors.map(sec => `<option value="${sec}" ${uiState.bistSector === sec ? 'selected' : ''}>${sec}</option>`).join('');
+
+      const usSectors = Array.from(new Set(usArray.map(s => s.sector))).sort((a, b) => a.localeCompare(b, 'tr'));
+      document.getElementById('us-sector-filter').innerHTML =
+        `<option value="ALL">Sektörler (${usSectors.length})</option>` +
+        usSectors.map(sec => `<option value="${sec}" ${uiState.usSector === sec ? 'selected' : ''}>${sec}</option>`).join('');
+    }
+
+    // =========================================================================
+    // 5. LIVE DATA FETCHERS (NEVER OVERWRITE USER TYPING!)
+    // =========================================================================
+    function applyAssetRows(market, rows) {
+      const overrides = getManualOverrides();
+      let updated = 0;
+
+      rows.forEach(r => {
+        const sym = String(r.symbol || '').toUpperCase().replace('.IS', '').trim();
+        const price = Number(r.price);
+        if (!sym || isNaN(price) || price <= 0) return;
+
+        const id = market + ':' + sym;
+        if (overrides[id]) return;
+
+        const ex = allAssetsMap.get(id);
+        let flash = '';
+        if (ex) {
+          if (price > ex.price) flash = 'flash-up';
+          else if (price < ex.price) flash = 'flash-down';
+        }
+
+        const chgAbs = !isNaN(Number(r.changeAbs)) ? Number(r.changeAbs) : (ex ? +(price - ex.prevClose).toFixed(2) : 0);
+        const prevClose = +(price - chgAbs).toFixed(2);
+        const chgPct = !isNaN(Number(r.changePct)) ? Number(r.changePct) : (prevClose > 0 ? +((chgAbs / prevClose) * 100).toFixed(2) : 0);
+
+        allAssetsMap.set(id, {
+          id,
+          market,
+          currency: market === 'BIST' ? '₺' : '$',
+          symbol: sym,
+          name: ex ? ex.name : (r.name || sym),
+          sector: ex ? ex.sector : (r.sector || 'Diğer'),
+          prevClose: prevClose > 0 ? prevClose : price,
+          price: +price.toFixed(2),
+          changePct: +chgPct.toFixed(2),
+          changeAbs: +chgAbs.toFixed(2),
+          isManual: false,
+          flash
+        });
+        updated++;
+      });
+      return updated;
+    }
+
+    function updateMacroItem(key, value, changePct) {
+      const overrides = getManualOverrides();
+      if (overrides['MACRO:' + key]) return;
+      const cur = macroMap.get(key);
+      if (!cur || isNaN(value) || value <= 0) return;
+      cur.value = +Number(value).toFixed(2);
+      if (!isNaN(Number(changePct))) {
+        cur.changePct = +Number(changePct).toFixed(2);
+      }
+      cur.isManual = false;
+    }
+
+    function recalcTurkishGoldFromSpot() {
+      const usd = macroMap.get('USDTRY');
+      const ons = macroMap.get('XAUUSD');
+      if (usd && ons && usd.value > 0 && ons.value > 0) {
+        const gramTry = (ons.value * usd.value) / 31.1034768;
+        const combinedPct = +(usd.changePct + ons.changePct).toFixed(2);
+        updateMacroItem('GRAM_ALTIN', gramTry, combinedPct);
+        updateMacroItem('CEYREK_ALTIN', gramTry * 1.635, combinedPct);
+      }
+    }
+
+    async function fetchBistLive() {
+      try {
+        const payload = JSON.stringify({
+          filter: [],
+          options: { lang: 'tr' },
+          symbols: { query: { types: [] }, tickers: [] },
+          columns: ['name', 'description', 'close', 'change', 'change_abs', 'sector'],
+          sort: { sortBy: 'name', sortOrder: 'asc' },
+          range: [0, 1000]
+        });
+        const ctrl = new AbortController();
+        const t = setTimeout(() => ctrl.abort(), 5000);
+        const res = await fetch('https://scanner.tradingview.com/turkey/scan', {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+          body: payload,
+          signal: ctrl.signal
+        });
+        clearTimeout(t);
+        const json = await res.json();
+        if (json && Array.isArray(json.data) && json.data.length > 20) {
+          const rows = json.data.map(r => ({
+            symbol: r.d[0], name: r.d[1], price: r.d[2], changePct: r.d[3], changeAbs: r.d[4], sector: r.d[5]
+          }));
+          const n = applyAssetRows('BIST', rows);
+          diagnostics.bist = `Canlı (${n} hisse)`;
+          return n;
+        }
+      } catch (e) {}
+      diagnostics.bist = 'Kayıtlı Veri';
+      return 0;
+    }
+
+    async function fetchUsLive() {
+      try {
+        const payload = JSON.stringify({
+          filter: [
+            { left: 'exchange', operation: 'in_range', right: ['NASDAQ', 'NYSE'] }
+          ],
+          options: { lang: 'en' },
+          symbols: { query: { types: ['stock'] }, tickers: [] },
+          columns: ['name', 'description', 'close', 'change', 'change_abs', 'sector'],
+          sort: { sortBy: 'market_cap_basic', sortOrder: 'desc' },
+          range: [0, 200]
+        });
+        const ctrl = new AbortController();
+        const t = setTimeout(() => ctrl.abort(), 5500);
+        const res = await fetch('https://scanner.tradingview.com/america/scan', {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+          body: payload,
+          signal: ctrl.signal
+        });
+        clearTimeout(t);
+        const json = await res.json();
+        if (json && Array.isArray(json.data) && json.data.length > 20) {
+          const rows = json.data.map(r => ({
+            symbol: r.d[0], name: r.d[1], price: r.d[2], changePct: r.d[3], changeAbs: r.d[4], sector: r.d[5]
+          }));
+          const n = applyAssetRows('US', rows);
+          diagnostics.us = `Canlı (${n} ABD hissesi)`;
+          return n;
+        }
+      } catch (e) {}
+      diagnostics.us = 'Kayıtlı Veri';
+      return 0;
+    }
+
+    async function fetchIndicesFxGoldLive() {
+      let okCount = 0;
+
+      try {
+        const idxPayload = JSON.stringify({
+          symbols: { tickers: ['BIST:XU030', 'BIST:XU100', 'BIST:XUTUM'] },
+          columns: ['name', 'close', 'change']
+        });
+        const res = await fetch('https://scanner.tradingview.com/turkey/scan', {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+          body: idxPayload
+        });
+        const json = await res.json();
+        if (json && Array.isArray(json.data)) {
+          json.data.forEach(r => {
+            const sym = String(r.d[0] || '').toUpperCase();
+            if (macroMap.has(sym)) {
+              updateMacroItem(sym, r.d[1], r.d[2]);
+              okCount++;
+            }
+          });
+        }
+      } catch (e) {}
+
+      try {
+        const fxPayload = JSON.stringify({
+          symbols: { tickers: ['FX_IDC:USDTRY', 'FX_IDC:EURTRY', 'OANDA:XAUUSD', 'TVC:GOLD'] },
+          columns: ['name', 'close', 'change']
+        });
+        const res = await fetch('https://scanner.tradingview.com/forex/scan', {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+          body: fxPayload
+        });
+        const json = await res.json();
+        if (json && Array.isArray(json.data)) {
+          json.data.forEach(r => {
+            const sym = String(r.d[0] || '').toUpperCase();
+            if (sym === 'USDTRY') { updateMacroItem('USDTRY', r.d[1], r.d[2]); okCount++; }
+            if (sym === 'EURTRY') { updateMacroItem('EURTRY', r.d[1], r.d[2]); okCount++; }
+            if (sym === 'XAUUSD' || sym === 'GOLD') { updateMacroItem('XAUUSD', r.d[1], r.d[2]); okCount++; }
+          });
+        }
+      } catch (e) {}
+
+      if (okCount === 0) {
+        try {
+          const fxRes = await fetch('https://open.er-api.com/v6/latest/USD');
+          const fxJson = await fxRes.json();
+          if (fxJson && fxJson.rates && fxJson.rates.TRY) {
+            const usdTry = fxJson.rates.TRY;
+            const eurTry = usdTry / (fxJson.rates.EUR || 0.92);
+            updateMacroItem('USDTRY', usdTry, 0);
+            updateMacroItem('EURTRY', eurTry, 0);
+            okCount += 2;
+          }
+        } catch (e) {}
+      }
+
+      recalcTurkishGoldFromSpot();
+      diagnostics.macro = okCount > 0 ? `Canlı (${okCount} gösterge)` : 'Kayıtlı Veri';
+      return okCount;
+    }
+
+    function isUserActivelyTyping() {
+      const el = document.activeElement;
+      if (!el) return false;
+      const tag = el.tagName;
+      return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT';
+    }
+
+    async function fetchAllLiveMarkets() {
+      const icon = document.getElementById('refresh-icon');
+      icon.classList.add('spin');
+
+      const [bistN, usN, macroN] = await Promise.all([
+        fetchBistLive(),
+        fetchUsLive(),
+        fetchIndicesFxGoldLive()
+      ]);
+
+      const totalLive = bistN + usN + macroN;
+      const statusEl = document.getElementById('feed-status-text');
+      const dotEl = document.getElementById('live-dot');
+      const diagEl = document.getElementById('api-diagnostic-box');
+
+      if (totalLive > 0) {
+        statusEl.textContent = 'Canlı Piyasa Aktif';
+        dotEl.style.background = 'var(--green)';
+      } else {
+        statusEl.textContent = 'Kayıtlı Veri Modu';
+        dotEl.style.background = 'var(--amber)';
+      }
+
+      if (diagEl) {
+        diagEl.innerHTML = `
+          <strong>Piyasa Bağlantı Özeti:</strong><br>
+          • BIST Hisseleri: ${diagnostics.bist}<br>
+          • ABD Borsası: ${diagnostics.us}<br>
+          • Endeks / Döviz / Altın: ${diagnostics.macro}<br>
+          • Son Kontrol: ${new Date().toLocaleTimeString('tr-TR')}
+        `;
+      }
+
+      syncArraysAndFilters();
+      saveSnapshots();
+      document.getElementById('last-update-text').textContent = new Date().toLocaleTimeString('tr-TR');
+
+      // Update active views without ever destroying focused inputs or causing page jumps
+      renderHomeView();
+      if (uiState.activeTab === 'tab-bist') renderBistView();
+      if (uiState.activeTab === 'tab-us') renderUsView();
+      if (uiState.activeTab === 'tab-group-contents') renderGroupContentsView();
+      if (isUserActivelyTyping()) {
+        updateGroupsLiveMetricsInPlace();
+      } else {
+        renderGroupsView(true);
+      }
+
+      setTimeout(() => icon.classList.remove('spin'), 400);
+    }
+
+    function setupAutoRefresh() {
+      if (refreshTimer) clearInterval(refreshTimer);
+      const ms = Number(uiState.refreshInterval || 10000);
+      if (ms > 0) {
+        refreshTimer = setInterval(fetchAllLiveMarkets, ms);
+      }
+    }
+
+    document.getElementById('manual-refresh-btn').addEventListener('click', () => {
+      fetchAllLiveMarkets();
+      showToast('Tüm piyasalar güncelleniyor...');
+    });
+
+    document.getElementById('refresh-interval-select').addEventListener('change', (e) => {
+      uiState.refreshInterval = e.target.value;
+      saveUserUiState();
+      setupAutoRefresh();
+      showToast('Güncelleme süresi kaydedildi');
+    });
+
+    document.getElementById('reset-manual-overrides-btn').addEventListener('click', () => {
+      localStorage.removeItem(KEYS.MANUAL_PRICES);
+      localStorage.removeItem(KEYS.PRICES);
+      localStorage.removeItem(KEYS.MACRO);
+      initAllDataFromStorage();
+      fetchAllLiveMarkets();
+      showToast('Manuel düzeltmeler sıfırlandı');
+    });
+
+    // =========================================================================
+    // 6. FORMATTERS
+    // =========================================================================
+    function fmt(n) {
+      return Number(n).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function getPctClass(pct) {
+      if (pct > 0.001) return 'up';
+      if (pct < -0.001) return 'down';
+      return 'flat';
+    }
+
+    // =========================================================================
+    // 7. HOME SCREEN RENDERING (COMPACT GROUPS + COMPACT FX/GOLD/INDICES)
+    // =========================================================================
+    function calcGroupMetrics(group) {
+      let totalW = 0;
+      let weightedRet = 0;
+      group.holdings.forEach(h => {
+        const id = h.assetId || (allAssetsMap.has('BIST:' + h.symbol) ? 'BIST:' + h.symbol : 'US:' + h.symbol);
+        const st = allAssetsMap.get(id);
+        const w = Number(h.weight) || 0;
+        const pct = st ? st.changePct : 0;
+        totalW += w;
+        weightedRet += (w / 100) * pct;
+      });
+      return {
+        totalW: +totalW.toFixed(2),
+        weightedRet: +weightedRet.toFixed(2)
+      };
+    }
+
+    function renderHomeView() {
+      // 1A. COMPACT GRUPLARIN SADECE GÜNLÜK DEĞİŞİMİ
+      const groups = getUserGroups();
+      const homeGroupsEl = document.getElementById('home-groups-container');
+      if (groups.length === 0) {
+        homeGroupsEl.innerHTML = `<div style="font-size:12px; color:var(--text-secondary); text-align:center; padding:6px;">
+          Henüz grup oluşturulmadı. <span style="color:var(--accent); font-weight:700; cursor:pointer;" onclick="switchTab('tab-groups', true)">Grup Oluştur →</span>
+        </div>`;
+      } else {
+        homeGroupsEl.innerHTML = groups.map(g => {
+          const m = calcGroupMetrics(g);
+          const cls = getPctClass(m.weightedRet);
+          const sign = m.weightedRet > 0 ? '+' : '';
+          return `<div class="home-group-row" onclick="openGroupFromHome('${g.id}')">
+            <div style="min-width:0; display:flex; align-items:center; gap:6px;">
+              <span style="font-size:12.5px; font-weight:800; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${g.name}</span>
+              <span style="font-size:10.5px; color:var(--text-muted); flex-shrink:0;">(${g.holdings.length} hisse)</span>
+            </div>
+            <div class="pct-badge ${cls}" style="font-size:12px; padding:2px 8px; min-width:58px;">
+              %${sign}${fmt(m.weightedRet)}
+            </div>
+          </div>`;
+        }).join('');
+      }
+
+      // 1B. COMPACT BIST ENDEKSLERİ
+      const idxKeys = ['XU030', 'XU100', 'XUTUM'];
+      document.getElementById('home-indices-grid').innerHTML = idxKeys.map(k => {
+        const item = macroMap.get(k);
+        const cls = getPctClass(item.changePct);
+        const sign = item.changePct > 0 ? '+' : '';
+        return `<div class="mini-market-card" onclick="openEditMacroSheet('${k}')">
+          <div class="mmc-title">${item.label}</div>
+          <div class="mmc-val">${fmt(item.value)}</div>
+          <span class="mmc-pct ${cls}">${sign}%${fmt(item.changePct)}</span>
+        </div>`;
+      }).join('');
+
+      // 1C. COMPACT DÖVİZ & ALTIN
+      const fxKeys = ['USDTRY', 'EURTRY', 'GRAM_ALTIN', 'CEYREK_ALTIN', 'XAUUSD'];
+      document.getElementById('home-fx-gold-grid').innerHTML = fxKeys.map(k => {
+        const item = macroMap.get(k);
+        const cls = getPctClass(item.changePct);
+        const sign = item.changePct > 0 ? '+' : '';
+        return `<div class="mini-market-card" onclick="openEditMacroSheet('${k}')">
+          <div class="mmc-title">${item.label}</div>
+          <div class="mmc-val">${fmt(item.value)} ${item.unit}</div>
+          <span class="mmc-pct ${cls}">${sign}%${fmt(item.changePct)}</span>
+        </div>`;
+      }).join('');
+
+      // 1D. FAVORİLERİM (YERLİ & YABANCI AYRI)
+      const favIds = getUserFavorites();
+      document.getElementById('home-fav-count').textContent = favIds.length;
+      const q = (uiState.favSearch || '').toLowerCase();
+
+      const favAssets = favIds
+        .map(id => allAssetsMap.get(id))
+        .filter(s => s && (!q || s.symbol.toLowerCase().includes(q) || s.name.toLowerCase().includes(q)));
+
+      const bistFavs = favAssets.filter(s => s.market === 'BIST');
+      const usFavs = favAssets.filter(s => s.market === 'US');
+
+      document.getElementById('home-bist-fav-count').textContent = bistFavs.length;
+      document.getElementById('home-us-fav-count').textContent = usFavs.length;
+
+      const bistContainer = document.getElementById('fav-bist-stocks-list');
+      const usContainer = document.getElementById('fav-us-stocks-list');
+
+      if (bistFavs.length === 0) {
+        bistContainer.innerHTML = '<div style="padding:16px; text-align:center; color:var(--text-secondary); font-size:12px;">Yerli favori hisse bulunmuyor.</div>';
+      } else {
+        bistContainer.innerHTML = bistFavs.map(s => renderStockRowHtml(s, true, false)).join('');
+      }
+
+      if (usFavs.length === 0) {
+        usContainer.innerHTML = '<div style="padding:16px; text-align:center; color:var(--text-secondary); font-size:12px;">Yabancı favori hisse bulunmuyor.</div>';
+      } else {
+        usContainer.innerHTML = usFavs.map(s => renderStockRowHtml(s, true, false)).join('');
+      }
+    }
+
+    window.openGroupFromHome = function(groupId) {
+      uiState.selectedGroupId = groupId;
+      saveUserUiState();
+      switchTab('tab-groups', true);
+    };
+
+    document.getElementById('fav-search-input').addEventListener('input', (e) => {
+      uiState.favSearch = e.target.value.trim();
+      saveUserUiState();
+      renderHomeView();
+    });
+
+    // =========================================================================
+    // 8. SHARED STOCK ROW HTML GENERATOR
+    // =========================================================================
+    function renderStockRowHtml(s, isFav, showMarketBadge = false) {
+      const cls = getPctClass(s.changePct);
+      const sign = s.changePct > 0 ? '+' : '';
+      return `<div class="stock-row ${s.flash}">
+        <div class="stock-row-left">
+          <button class="star-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite('${s.id}')" aria-label="Favori">
+            ${isFav ? '★' : '☆'}
+          </button>
+          <div class="stock-info">
+            <div class="stock-code-line">
+              <span class="ticker">${s.symbol}</span>
+              ${showMarketBadge ? `<span class="market-pill ${s.market === 'BIST' ? 'bist' : ''}">${s.market === 'BIST' ? 'BIST' : 'ABD'}</span>` : ''}
+              <span class="sector-mini">${s.sector}</span>
+              ${s.isManual ? '<span class="manual-tag">Manuel</span>' : ''}
+            </div>
+            <div class="company-sub">${s.name}</div>
+          </div>
+        </div>
+        <div class="stock-row-right">
+          <div class="price-block" onclick="openEditAssetSheet('${s.id}')" title="Fiyatı Düzenle">
+            <div class="price-val">${fmt(s.price)} ${s.currency}</div>
+            <div class="diff-sub">${s.changeAbs > 0 ? '+' : ''}${fmt(s.changeAbs)} ${s.currency}</div>
+          </div>
+          <div class="pct-badge ${cls}" onclick="openEditAssetSheet('${s.id}')">${sign}%${fmt(s.changePct)}</div>
+          <button class="add-grp-mini" onclick="openGroupSheet('${s.id}')" title="Gruba Ekle">+</button>
+        </div>
+      </div>`;
+    }
+
+    // =========================================================================
+    // 9. TAB 2: BIST PİYASALAR VIEW
+    // =========================================================================
+    function renderBistView() {
+      let up = 0, down = 0, sum = 0;
+      bistArray.forEach(s => {
+        sum += s.changePct;
+        if (s.changePct > 0.001) up++;
+        else if (s.changePct < -0.001) down++;
+      });
+      const avg = bistArray.length ? (sum / bistArray.length) : 0;
+      document.getElementById('stat-total').textContent = bistArray.length;
+      document.getElementById('stat-up').textContent = up;
+      document.getElementById('stat-down').textContent = down;
+      const avgEl = document.getElementById('stat-avg');
+      avgEl.textContent = (avg >= 0 ? '%+' : '%') + fmt(avg);
+      avgEl.style.color = avg > 0 ? 'var(--green)' : avg < 0 ? 'var(--red)' : 'var(--text-primary)';
+
+      const favSet = new Set(getUserFavorites());
+      const q = (uiState.bistSearch || '').toLowerCase();
+
+      const filtered = bistArray.filter(s => {
+        if (uiState.bistSector !== 'ALL' && s.sector !== uiState.bistSector) return false;
+        if (uiState.bistFilter === 'up' && s.changePct <= 0.001) return false;
+        if (uiState.bistFilter === 'down' && s.changePct >= -0.001) return false;
+        if (uiState.bistFilter === 'flat' && Math.abs(s.changePct) > 0.001) return false;
+        if (q && !s.symbol.toLowerCase().includes(q) && !s.name.toLowerCase().includes(q) && !s.sector.toLowerCase().includes(q)) return false;
+        return true;
+      });
+
+      filtered.sort((a, b) => {
+        const va = a[uiState.bistSortKey];
+        const vb = b[uiState.bistSortKey];
+        if (typeof va === 'string') return uiState.bistSortDir === 'asc' ? va.localeCompare(vb, 'tr') : vb.localeCompare(va, 'tr');
+        return uiState.bistSortDir === 'asc' ? va - vb : vb - va;
+      });
+
+      document.getElementById('bist-visible-label').textContent = filtered.length;
+      const container = document.getElementById('bist-stocks-list');
+      if (filtered.length === 0) {
+        container.innerHTML = '<div style="padding:26px; text-align:center; color:var(--text-secondary);">Aramanıza uygun BIST hissesi bulunamadı.</div>';
+        return;
+      }
+      container.innerHTML = filtered.map(s => renderStockRowHtml(s, favSet.has(s.id), false)).join('');
+    }
+
+    document.getElementById('bist-search-input').addEventListener('input', (e) => {
+      uiState.bistSearch = e.target.value.trim();
+      saveUserUiState();
+      renderBistView();
+    });
+
+    document.getElementById('bist-sector-filter').addEventListener('change', (e) => {
+      uiState.bistSector = e.target.value;
+      saveUserUiState();
+      renderBistView();
+    });
+
+    document.querySelectorAll('.chip[data-bist-filter]').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.chip[data-bist-filter]').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        uiState.bistFilter = chip.dataset.bistFilter;
+        saveUserUiState();
+        renderBistView();
+      });
+    });
+
+    window.toggleBistSort = function(key) {
+      if (uiState.bistSortKey === key) uiState.bistSortDir = uiState.bistSortDir === 'asc' ? 'desc' : 'asc';
+      else { uiState.bistSortKey = key; uiState.bistSortDir = key === 'symbol' ? 'asc' : 'desc'; }
+      document.querySelectorAll('#tab-bist .sort-triggers span').forEach(s => s.classList.remove('active-sort'));
+      const el = document.getElementById('sort-bist-' + key);
+      if (el) el.classList.add('active-sort');
+      saveUserUiState();
+      renderBistView();
+    };
+
+    // =========================================================================
+    // 10. TAB 3: ABD BORSASI (USA STOCKS) VIEW
+    // =========================================================================
+    function renderUsView() {
+      let up = 0, down = 0, sum = 0;
+      usArray.forEach(s => {
+        sum += s.changePct;
+        if (s.changePct > 0.001) up++;
+        else if (s.changePct < -0.001) down++;
+      });
+      const avg = usArray.length ? (sum / usArray.length) : 0;
+      document.getElementById('us-stat-total').textContent = usArray.length;
+      document.getElementById('us-stat-up').textContent = up;
+      document.getElementById('us-stat-down').textContent = down;
+      const avgEl = document.getElementById('us-stat-avg');
+      avgEl.textContent = (avg >= 0 ? '%+' : '%') + fmt(avg);
+      avgEl.style.color = avg > 0 ? 'var(--green)' : avg < 0 ? 'var(--red)' : 'var(--text-primary)';
+
+      const favSet = new Set(getUserFavorites());
+      const q = (uiState.usSearch || '').toLowerCase();
+
+      const filtered = usArray.filter(s => {
+        if (uiState.usSector !== 'ALL' && s.sector !== uiState.usSector) return false;
+        if (uiState.usFilter === 'up' && s.changePct <= 0.001) return false;
+        if (uiState.usFilter === 'down' && s.changePct >= -0.001) return false;
+        if (uiState.usFilter === 'flat' && Math.abs(s.changePct) > 0.001) return false;
+        if (q && !s.symbol.toLowerCase().includes(q) && !s.name.toLowerCase().includes(q) && !s.sector.toLowerCase().includes(q)) return false;
+        return true;
+      });
+
+      filtered.sort((a, b) => {
+        const va = a[uiState.usSortKey];
+        const vb = b[uiState.usSortKey];
+        if (typeof va === 'string') return uiState.usSortDir === 'asc' ? va.localeCompare(vb, 'en') : vb.localeCompare(va, 'en');
+        return uiState.usSortDir === 'asc' ? va - vb : vb - va;
+      });
+
+      document.getElementById('us-visible-label').textContent = filtered.length;
+      const container = document.getElementById('us-stocks-list');
+      if (filtered.length === 0) {
+        container.innerHTML = '<div style="padding:26px; text-align:center; color:var(--text-secondary);">Aramanıza uygun ABD hissesi bulunamadı.</div>';
+        return;
+      }
+      container.innerHTML = filtered.map(s => renderStockRowHtml(s, favSet.has(s.id), false)).join('');
+    }
+
+    document.getElementById('us-search-input').addEventListener('input', (e) => {
+      uiState.usSearch = e.target.value.trim();
+      saveUserUiState();
+      renderUsView();
+    });
+
+    document.getElementById('us-sector-filter').addEventListener('change', (e) => {
+      uiState.usSector = e.target.value;
+      saveUserUiState();
+      renderUsView();
+    });
+
+    document.querySelectorAll('.chip[data-us-filter]').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.chip[data-us-filter]').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        uiState.usFilter = chip.dataset.usFilter;
+        saveUserUiState();
+        renderUsView();
+      });
+    });
+
+    window.toggleUsSort = function(key) {
+      if (uiState.usSortKey === key) uiState.usSortDir = uiState.usSortDir === 'asc' ? 'desc' : 'asc';
+      else { uiState.usSortKey = key; uiState.usSortDir = key === 'symbol' ? 'asc' : 'desc'; }
+      document.querySelectorAll('#tab-us .sort-triggers span').forEach(s => s.classList.remove('active-sort'));
+      const el = document.getElementById('sort-us-' + key);
+      if (el) el.classList.add('active-sort');
+      saveUserUiState();
+      renderUsView();
+    };
+
+    // =========================================================================
+    // 11. MANUAL PRICE EDIT BOTTOM SHEET
+    // =========================================================================
+    window.openEditAssetSheet = function(assetId) {
+      const st = allAssetsMap.get(assetId);
+      if (!st) return;
+      editTargetId = assetId;
+      document.getElementById('edit-price-symbol').textContent = `${st.symbol} (${st.market === 'BIST' ? 'BIST' : 'ABD'})`;
+      document.getElementById('edit-price-company').textContent = st.name;
+      document.getElementById('edit-price-val-label').textContent = `Güncel Fiyat (${st.currency})`;
+      document.getElementById('edit-price-val-input').value = st.price;
+      document.getElementById('edit-price-pct-input').value = st.changePct;
+      document.getElementById('edit-price-sheet').classList.add('open');
+    };
+
+    window.openEditMacroSheet = function(macroKey) {
+      const m = macroMap.get(macroKey);
+      if (!m) return;
+      editTargetId = 'MACRO:' + macroKey;
+      document.getElementById('edit-price-symbol').textContent = m.label;
+      document.getElementById('edit-price-company').textContent = 'Gösterge Değerini Manuel Düzenle';
+      document.getElementById('edit-price-val-label').textContent = `Güncel Değer ${m.unit ? '(' + m.unit + ')' : ''}`;
+      document.getElementById('edit-price-val-input').value = m.value;
+      document.getElementById('edit-price-pct-input').value = m.changePct;
+      document.getElementById('edit-price-sheet').classList.add('open');
+    };
+
+    document.getElementById('close-price-sheet-btn').addEventListener('click', () => {
+      document.getElementById('edit-price-sheet').classList.remove('open');
+    });
+
+    document.getElementById('edit-price-sheet').addEventListener('click', (e) => {
+      if (e.target.id === 'edit-price-sheet') document.getElementById('edit-price-sheet').classList.remove('open');
+    });
+
+    document.getElementById('save-manual-price-btn').addEventListener('click', () => {
+      if (!editTargetId) return;
+      const newPrice = parseDecimalInput(document.getElementById('edit-price-val-input').value);
+      const newPct = parseDecimalInput(document.getElementById('edit-price-pct-input').value) || 0;
+      if (isNaN(newPrice) || newPrice <= 0) {
+        showToast('Geçerli bir değer girin');
+        return;
+      }
+
+      const overrides = getManualOverrides();
+      if (editTargetId.startsWith('MACRO:')) {
+        const k = editTargetId.replace('MACRO:', '');
+        overrides[editTargetId] = { price: +newPrice.toFixed(2), changePct: +newPct.toFixed(2) };
+        saveManualOverrides(overrides);
+        const m = macroMap.get(k);
+        if (m) {
+          m.value = +newPrice.toFixed(2);
+          m.changePct = +newPct.toFixed(2);
+          m.isManual = true;
+        }
+        if (k === 'USDTRY' || k === 'XAUUSD') recalcTurkishGoldFromSpot();
+      } else {
+        const prevClose = +(newPrice / (1 + newPct / 100)).toFixed(2);
+        const changeAbs = +(newPrice - prevClose).toFixed(2);
+        overrides[editTargetId] = { price: +newPrice.toFixed(2), changePct: +newPct.toFixed(2), prevClose };
+        saveManualOverrides(overrides);
+        const st = allAssetsMap.get(editTargetId);
+        if (st) {
+          st.price = +newPrice.toFixed(2);
+          st.changePct = +newPct.toFixed(2);
+          st.prevClose = prevClose;
+          st.changeAbs = changeAbs;
+          st.isManual = true;
+        }
+      }
+
+      syncArraysAndFilters();
+      saveSnapshots();
+      renderHomeView();
+      renderBistView();
+      renderUsView();
+      renderGroupsView(true);
+      document.getElementById('edit-price-sheet').classList.remove('open');
+      showToast('Değer kalıcı olarak kaydedildi');
+    });
+
+    document.getElementById('clear-single-manual-btn').addEventListener('click', () => {
+      if (!editTargetId) return;
+      const overrides = getManualOverrides();
+      delete overrides[editTargetId];
+      saveManualOverrides(overrides);
+      document.getElementById('edit-price-sheet').classList.remove('open');
+      fetchAllLiveMarkets();
+      showToast('Canlı veriye döndürüldü');
+    });
+
+    // =========================================================================
+    // 12. TAB 4: STOCK GROUPS (ALL GROUPS VISIBLE + EASY % + NO REFRESH JUMP)
+    // =========================================================================
+    function updateGroupsHeaderAndSummary(groups, activeGrp) {
+      const pillsRow = document.getElementById('group-pills-row');
+      pillsRow.innerHTML = groups.map(g => {
+        const m = calcGroupMetrics(g);
+        const isAct = g.id === uiState.selectedGroupId;
+        const col = m.weightedRet > 0.0001 ? 'var(--green)' : m.weightedRet < -0.0001 ? 'var(--red)' : 'var(--text-secondary)';
+        const sign = m.weightedRet > 0 ? '+' : '';
+        return `<button class="group-chip ${isAct ? 'active' : ''}" onclick="selectMobileGroup('${g.id}')">
+          <div class="group-chip-name">${g.name}</div>
+          <div class="group-chip-sub">
+            <span style="color:${col};">${sign}%${fmt(m.weightedRet)}</span>
+            <span style="color:var(--text-muted); font-weight:600; font-size:10.5px;">${g.holdings.length} hisse</span>
+          </div>
+        </button>`;
+      }).join('');
+
+      if (!activeGrp) return;
+
+      const metrics = calcGroupMetrics(activeGrp);
+      const retEl = document.getElementById('group-daily-return');
+      const sign = metrics.weightedRet > 0 ? '+' : '';
+      retEl.textContent = `${sign}%${fmt(metrics.weightedRet)}`;
+      retEl.style.color = metrics.weightedRet > 0.0001 ? 'var(--green)' : metrics.weightedRet < -0.0001 ? 'var(--red)' : 'var(--text-primary)';
+
+      const wEl = document.getElementById('group-total-weight');
+      wEl.textContent = `%${fmt(metrics.totalW)}`;
+      const warnEl = document.getElementById('weight-warn');
+      if (Math.abs(metrics.totalW - 100) > 0.05 && activeGrp.holdings.length > 0) {
+        wEl.style.color = 'var(--amber)';
+        warnEl.style.display = 'block';
+      } else {
+        wEl.style.color = 'var(--green)';
+        warnEl.style.display = 'none';
+      }
+
+      const capInput = document.getElementById('group-capital-input');
+      const hasSavedCap = typeof activeGrp.capital === 'number' && !isNaN(activeGrp.capital);
+      if (document.activeElement !== capInput) {
+        capInput.value = hasSavedCap ? activeGrp.capital : '';
+      }
+      const cap = hasSavedCap ? activeGrp.capital : 0;
+      const endVal = cap * (1 + metrics.weightedRet / 100);
+      const diff = endVal - cap;
+      const capRes = document.getElementById('group-capital-result');
+      capRes.innerHTML = `${fmt(endVal)} ₺<div style="font-size:11px;">(${diff >= 0 ? '+' : ''}${fmt(diff)} ₺)</div>`;
+      capRes.style.color = diff > 0 ? 'var(--green)' : diff < 0 ? 'var(--red)' : 'var(--text-secondary)';
+    }
+
+    // In-place live price/metric refresh that NEVER touches or destroys input elements
+    function updateGroupsLiveMetricsInPlace() {
+      const groups = getUserGroups();
+      if (groups.length === 0) return;
+      const activeGrp = groups.find(g => g.id === uiState.selectedGroupId);
+      updateGroupsHeaderAndSummary(groups, activeGrp);
+      if (!activeGrp) return;
+
+      activeGrp.holdings.forEach((h, idx) => {
+        const id = h.assetId || (allAssetsMap.has('BIST:' + h.symbol) ? 'BIST:' + h.symbol : 'US:' + h.symbol);
+        const st = allAssetsMap.get(id);
+        if (!st) return;
+        const card = document.querySelector(`.holding-card[data-holding-idx="${idx}"]`);
+        if (!card) return;
+        const priceEl = card.querySelector('.js-holding-price');
+        if (priceEl) priceEl.textContent = `${fmt(st.price)} ${st.currency} ✎`;
+        const pctEl = card.querySelector('.js-holding-pct');
+        if (pctEl) {
+          const sSign = st.changePct > 0 ? '+' : '';
+          pctEl.className = `pct-badge js-holding-pct ${getPctClass(st.changePct)}`;
+          pctEl.textContent = `${sSign}%${fmt(st.changePct)}`;
+        }
+        const contrib = (Number(h.weight) / 100) * st.changePct;
+        const contribEl = card.querySelector('.js-holding-contrib');
+        if (contribEl) {
+          const cSign = contrib > 0 ? '+' : '';
+          const cCol = contrib > 0.0001 ? 'var(--green)' : contrib < -0.0001 ? 'var(--red)' : 'var(--text-secondary)';
+          contribEl.style.color = cCol;
+          contribEl.textContent = `${cSign}%${fmt(contrib)}`;
+        }
+      });
+    }
+
+    function renderGroupsView(rebuildHoldingsDom = true) {
+      const groups = getUserGroups();
+      document.getElementById('badge-groups').textContent = groups.length;
+
+      if (groups.length === 0) {
+        document.getElementById('group-pills-row').innerHTML = '';
+        uiState.selectedGroupId = null;
+        document.getElementById('no-group-box').style.display = 'block';
+        document.getElementById('active-group-card').style.display = 'none';
+        return;
+      }
+
+      if (!uiState.selectedGroupId || !groups.some(g => g.id === uiState.selectedGroupId)) {
+        uiState.selectedGroupId = groups[0].id;
+        saveUserUiState();
+      }
+
+      const activeGrp = groups.find(g => g.id === uiState.selectedGroupId);
+      if (!activeGrp) return;
+
+      document.getElementById('no-group-box').style.display = 'none';
+      document.getElementById('active-group-card').style.display = 'block';
+
+      const nameInput = document.getElementById('edit-group-name-input');
+      if (document.activeElement !== nameInput) {
+        nameInput.value = activeGrp.name;
+      }
+
+      updateGroupsHeaderAndSummary(groups, activeGrp);
+
+      if (!rebuildHoldingsDom) return;
+
+      const holdingsContainer = document.getElementById('group-holdings-list');
+      if (activeGrp.holdings.length === 0) {
+        holdingsContainer.innerHTML = '<div style="text-align:center; padding:18px; color:var(--text-secondary); font-size:13px;">Bu grupta henüz hisse yok. Yukarıdan BIST veya ABD hissesi ekleyebilirsiniz.</div>';
+        return;
+      }
+
+      holdingsContainer.innerHTML = activeGrp.holdings.map((h, idx) => {
+        const id = h.assetId || (allAssetsMap.has('BIST:' + h.symbol) ? 'BIST:' + h.symbol : 'US:' + h.symbol);
+        const st = allAssetsMap.get(id) || { symbol: h.symbol, name: h.symbol, price: 0, changePct: 0, currency: '₺', market: 'BIST' };
+        const cls = getPctClass(st.changePct);
+        const sSign = st.changePct > 0 ? '+' : '';
+        const wNum = Number(h.weight) || 0;
+        const barW = Math.min(100, Math.max(0, wNum));
+        const contrib = (wNum / 100) * st.changePct;
+        const cSign = contrib > 0 ? '+' : '';
+        const cCol = contrib > 0.0001 ? 'var(--green)' : contrib < -0.0001 ? 'var(--red)' : 'var(--text-secondary)';
+
+        return `<div class="holding-card" data-holding-idx="${idx}">
+          <div class="holding-top">
+            <div style="min-width:0; flex:1;">
+              <div style="display:flex; align-items:center; flex-wrap:wrap; gap:4px;">
+                <span class="ticker">${st.symbol}</span>
+                <span class="market-pill ${st.market === 'BIST' ? 'bist' : ''}">${st.market === 'BIST' ? 'BIST' : 'ABD'}</span>
+                <span class="holding-weight-pill js-holding-weight-badge">%${fmt(wNum)}</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:6px; margin-top:3px;">
+                <span class="company-sub" style="max-width:155px; margin-top:0;">${st.name}</span>
+                <span class="js-holding-price" style="font-size:11.5px; color:#cbd5e1; font-weight:700; cursor:pointer;" onclick="openEditAssetSheet('${id}')">${fmt(st.price)} ${st.currency} ✎</span>
+              </div>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
+              <span class="pct-badge js-holding-pct ${cls}" style="padding:4px 7px; font-size:12px; min-width:60px;">${sSign}%${fmt(st.changePct)}</span>
+              <button class="btn btn-danger btn-sm" onclick="removeHolding(${idx})">Sil</button>
+            </div>
+          </div>
+
+          <div class="weight-bar-track">
+            <div class="weight-bar-fill js-holding-bar" style="width:${barW}%;"></div>
+          </div>
+
+          <div class="holding-bottom">
+            <div class="weight-edit-cluster">
+              <div class="weight-input-wrap">
+                <span>%</span>
+                <input type="text" inputmode="decimal" class="holding-weight-input"
+                  value="${wNum}"
+                  onfocus="this.select()"
+                  oninput="handleHoldingWeightInput(${idx}, this)"
+                  onblur="finalizeHoldingWeight(${idx}, this)" />
+              </div>
+              <button type="button" class="w-adj-btn" onclick="stepHoldingWeight(${idx}, -5)">-5</button>
+              <button type="button" class="w-adj-btn" onclick="stepHoldingWeight(${idx}, -1)">-1</button>
+              <button type="button" class="w-adj-btn" onclick="stepHoldingWeight(${idx}, 1)">+1</button>
+              <button type="button" class="w-adj-btn" onclick="stepHoldingWeight(${idx}, 5)">+5</button>
+              <button type="button" class="w-adj-btn" style="color:var(--green); border-color:rgba(16,185,129,0.4);" onclick="fillRemainingForHolding(${idx})">100%</button>
+            </div>
+            <div style="text-align:right; font-size:12px;">
+              <span style="color:var(--text-secondary);">Katkı: </span>
+              <strong class="js-holding-contrib" style="color:${cCol};">${cSign}%${fmt(contrib)}</strong>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    window.selectMobileGroup = function(id) {
+      uiState.selectedGroupId = id;
+      saveUserUiState();
+      renderGroupsView(true);
+    };
+
+    // Live typing handler for stock weight: saves immediately WITHOUT re-rendering the input box!
+    window.handleHoldingWeightInput = function(idx, inputEl) {
+      const groups = getUserGroups();
+      const grp = groups.find(g => g.id === uiState.selectedGroupId);
+      if (!grp || !grp.holdings[idx]) return;
+
+      const parsed = parseDecimalInput(inputEl.value);
+      const cleanW = isNaN(parsed) ? 0 : Math.max(0, Math.min(100, parsed));
+      grp.holdings[idx].weight = cleanW;
+
+      localStorage.setItem(KEYS.GROUPS_PREFIX + currentUser, JSON.stringify(groups));
+
+      // Update only the visual badge, bar, and contribution inside this card (keep input untouched!)
+      const card = inputEl.closest('.holding-card');
+      if (card) {
+        const badge = card.querySelector('.js-holding-weight-badge');
+        if (badge) badge.textContent = `%${fmt(cleanW)}`;
+        const bar = card.querySelector('.js-holding-bar');
+        if (bar) bar.style.width = `${Math.min(100, cleanW)}%`;
+
+        const h = grp.holdings[idx];
+        const id = h.assetId || (allAssetsMap.has('BIST:' + h.symbol) ? 'BIST:' + h.symbol : 'US:' + h.symbol);
+        const st = allAssetsMap.get(id);
+        const pct = st ? st.changePct : 0;
+        const contrib = (cleanW / 100) * pct;
+        const contribEl = card.querySelector('.js-holding-contrib');
+        if (contribEl) {
+          const cSign = contrib > 0 ? '+' : '';
+          const cCol = contrib > 0.0001 ? 'var(--green)' : contrib < -0.0001 ? 'var(--red)' : 'var(--text-secondary)';
+          contribEl.style.color = cCol;
+          contribEl.textContent = `${cSign}%${fmt(contrib)}`;
+        }
+      }
+
+      updateGroupsHeaderAndSummary(groups, grp);
+      renderHomeView();
+    };
+
+    window.finalizeHoldingWeight = function(idx, inputEl) {
+      const groups = getUserGroups();
+      const grp = groups.find(g => g.id === uiState.selectedGroupId);
+      if (!grp || !grp.holdings[idx]) return;
+      inputEl.value = grp.holdings[idx].weight;
+    };
+
+    window.stepHoldingWeight = function(idx, delta) {
+      const groups = getUserGroups();
+      const grp = groups.find(g => g.id === uiState.selectedGroupId);
+      if (!grp || !grp.holdings[idx]) return;
+      const nextW = Math.max(0, Math.min(100, +((Number(grp.holdings[idx].weight) || 0) + delta).toFixed(2)));
+      grp.holdings[idx].weight = nextW;
+      saveUserGroups(groups, true);
+    };
+
+    window.fillRemainingForHolding = function(idx) {
+      const groups = getUserGroups();
+      const grp = groups.find(g => g.id === uiState.selectedGroupId);
+      if (!grp || !grp.holdings[idx]) return;
+      let otherSum = 0;
+      grp.holdings.forEach((h, i) => {
+        if (i !== idx) otherSum += Number(h.weight) || 0;
+      });
+      const rem = Math.max(0, +(100 - otherSum).toFixed(2));
+      grp.holdings[idx].weight = rem;
+      saveUserGroups(groups, true);
+      showToast(`Yüzde %${fmt(rem)} olarak tamamlandı`);
+    };
+
+    window.adjustGroupBalance = function(delta) {
+      const groups = getUserGroups();
+      const grp = groups.find(g => g.id === uiState.selectedGroupId);
+      if (!grp) return;
+      const current = typeof grp.capital === 'number' && !isNaN(grp.capital) ? grp.capital : 0;
+      grp.capital = Math.max(0, +(current + delta).toFixed(2));
+      localStorage.setItem(KEYS.GROUPS_PREFIX + currentUser, JSON.stringify(groups));
+      document.getElementById('group-capital-input').value = grp.capital;
+      updateGroupsHeaderAndSummary(groups, grp);
+      showToast(`Grup bakiyesi: ${fmt(grp.capital)} ₺`);
+    };
+
+    window.applyCustomDelta = function(sign) {
+      const deltaInput = document.getElementById('custom-delta-input');
+      const amt = parseDecimalInput(deltaInput.value);
+      if (isNaN(amt) || amt <= 0) {
+        showToast('Lütfen eklenecek veya çıkarılacak tutarı girin');
+        return;
+      }
+      adjustGroupBalance(sign * amt);
+      deltaInput.value = '';
+    };
+
+    document.getElementById('group-capital-input').addEventListener('input', (e) => {
+      const groups = getUserGroups();
+      const grp = groups.find(g => g.id === uiState.selectedGroupId);
+      if (grp) {
+        const rawVal = e.target.value.trim();
+        if (rawVal === '') {
+          grp.capital = null;
+        } else {
+          const num = parseDecimalInput(rawVal);
+          if (!isNaN(num)) grp.capital = Math.max(0, num);
+        }
+        localStorage.setItem(KEYS.GROUPS_PREFIX + currentUser, JSON.stringify(groups));
+        updateGroupsHeaderAndSummary(groups, grp);
+      }
+    });
+
+    document.getElementById('create-group-btn').addEventListener('click', () => {
+      const inp = document.getElementById('new-group-name');
+      const name = inp.value.trim();
+      if (!name) {
+        showToast('Lütfen bir grup adı yazın');
+        return;
+      }
+      const groups = getUserGroups();
+      const newGrp = {
+        id: 'grp_' + Date.now(),
+        name,
+        capital: null,
+        holdings: []
+      };
+      groups.push(newGrp);
+      uiState.selectedGroupId = newGrp.id;
+      saveUserUiState();
+      inp.value = '';
+      saveUserGroups(groups, true);
+      showToast(`"${name}" oluşturuldu`);
+    });
+
+    document.getElementById('save-group-name-btn').addEventListener('click', () => {
+      const val = document.getElementById('edit-group-name-input').value.trim();
+      if (!val) return;
+      const groups = getUserGroups();
+      const grp = groups.find(g => g.id === uiState.selectedGroupId);
+      if (grp) {
+        grp.name = val;
+        saveUserGroups(groups, false);
+        showToast('Grup adı kaydedildi');
+      }
+    });
+
+    document.getElementById('equal-weights-btn').addEventListener('click', () => {
+      const groups = getUserGroups();
+      const grp = groups.find(g => g.id === uiState.selectedGroupId);
+      if (!grp || grp.holdings.length === 0) return;
+      const eq = +(100 / grp.holdings.length).toFixed(2);
+      const rem = +(100 - eq * grp.holdings.length).toFixed(2);
+      grp.holdings.forEach((h, i) => {
+        h.weight = i === 0 ? +(eq + rem).toFixed(2) : eq;
+      });
+      saveUserGroups(groups, true);
+      showToast('Yüzdeler eşit dağıtıldı');
+    });
+
+    document.getElementById('delete-group-btn').addEventListener('click', () => {
+      let groups = getUserGroups();
+      const oldGroups = JSON.parse(JSON.stringify(groups));
+      groups = groups.filter(g => g.id !== uiState.selectedGroupId);
+      uiState.selectedGroupId = groups.length ? groups[0].id : null;
+      saveUserUiState();
+      saveUserGroups(groups, true);
+      // Check all assets that were in old groups but not in new groups
+      oldGroups.forEach(g => {
+        if (g.id === uiState.selectedGroupId || !groups.find(x => x.id === g.id)) {
+          g.holdings.forEach(h => {
+            const id = h.assetId || ('BIST:' + h.symbol);
+            if (id) removeAssetFromFavsIfNotInAnyGroup(id, groups);
+          });
+        }
+      });
+      showToast('Grup silindi');
+    });
+
+    // Instant clickable autocomplete for adding stock to group
+    const groupStockSearchInput = document.getElementById('group-stock-search');
+    const groupStockSuggestionsEl = document.getElementById('group-stock-suggestions');
+
+    groupStockSearchInput.addEventListener('input', (e) => {
+      const q = e.target.value.trim().toLowerCase();
+      if (!q) {
+        groupStockSuggestionsEl.style.display = 'none';
+        groupStockSuggestionsEl.innerHTML = '';
+        return;
+      }
+      const matches = [];
+      allAssetsMap.forEach(st => {
+        if (st.symbol.toLowerCase().startsWith(q)) matches.unshift(st);
+        else if (st.symbol.toLowerCase().includes(q) || st.name.toLowerCase().includes(q)) matches.push(st);
+      });
+      const top = matches.slice(0, 8);
+      if (top.length === 0) {
+        groupStockSuggestionsEl.style.display = 'none';
+        return;
+      }
+      groupStockSuggestionsEl.innerHTML = top.map(st => {
+        const cls = getPctClass(st.changePct);
+        const sign = st.changePct > 0 ? '+' : '';
+        return `<div class="suggestion-item" onclick="pickSuggestedStock('${st.symbol}')">
+          <div style="min-width:0;">
+            <strong style="font-size:13px; color:#fff;">${st.symbol}</strong>
+            <span class="market-pill ${st.market === 'BIST' ? 'bist' : ''}" style="margin-left:4px;">${st.market === 'BIST' ? 'BIST' : 'ABD'}</span>
+            <div style="font-size:11px; color:var(--text-secondary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:190px;">${st.name}</div>
+          </div>
+          <div style="text-align:right; flex-shrink:0;">
+            <div style="font-size:12.5px; font-weight:800;">${fmt(st.price)} ${st.currency}</div>
+            <span class="mmc-pct ${cls}">${sign}%${fmt(st.changePct)}</span>
+          </div>
+        </div>`;
+      }).join('');
+      groupStockSuggestionsEl.style.display = 'block';
+    });
+
+    window.pickSuggestedStock = function(symbol) {
+      groupStockSearchInput.value = symbol;
+      groupStockSuggestionsEl.style.display = 'none';
+      const wInp = document.getElementById('group-stock-weight-add');
+      wInp.focus();
+      wInp.select();
+    };
+
+    window.setAddStockWeight = function(val) {
+      const wInp = document.getElementById('group-stock-weight-add');
+      wInp.value = val;
+    };
+
+    window.setAddRemainingWeight = function() {
+      const groups = getUserGroups();
+      const grp = groups.find(g => g.id === uiState.selectedGroupId);
+      if (!grp) return;
+      const m = calcGroupMetrics(grp);
+      const rem = Math.max(0, +(100 - m.totalW).toFixed(2));
+      document.getElementById('group-stock-weight-add').value = rem;
+    };
+
+    function triggerAddStockToGroup() {
+      const symInp = document.getElementById('group-stock-search');
+      const wInp = document.getElementById('group-stock-weight-add');
+      const raw = symInp.value.trim().toUpperCase();
+      let foundId = null;
+      if (allAssetsMap.has(raw)) foundId = raw;
+      else if (allAssetsMap.has('BIST:' + raw)) foundId = 'BIST:' + raw;
+      else if (allAssetsMap.has('US:' + raw)) foundId = 'US:' + raw;
+
+      if (!foundId) {
+        showToast('Geçerli bir BIST veya ABD hisse kodu girin');
+        return;
+      }
+      const groups = getUserGroups();
+      const grp = groups.find(g => g.id === uiState.selectedGroupId);
+      if (!grp) return;
+
+      const parsedW = parseDecimalInput(wInp.value);
+      const wVal = !isNaN(parsedW) ? Math.max(0, Math.min(100, parsedW)) : +(100 / (grp.holdings.length + 1)).toFixed(2);
+      const ex = grp.holdings.find(h => (h.assetId || 'BIST:' + h.symbol) === foundId);
+      if (ex) {
+        ex.weight = wVal;
+        showToast(`${raw} oranı %${wVal} güncellendi`);
+      } else {
+        grp.holdings.push({ assetId: foundId, symbol: raw, weight: wVal });
+        showToast(`${raw} (%${wVal}) gruba eklendi`);
+      }
+      ensureGroupHoldingsAreFavorites(groups);
+      symInp.value = '';
+      wInp.value = '';
+      groupStockSuggestionsEl.style.display = 'none';
+      saveUserGroups(groups, true);
+    }
+
+    document.getElementById('add-stock-to-group-btn').addEventListener('click', triggerAddStockToGroup);
+    document.getElementById('group-stock-weight-add').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        triggerAddStockToGroup();
+      }
+    });
+
+    window.removeHolding = function(idx) {
+      const groups = getUserGroups();
+      const grp = groups.find(g => g.id === uiState.selectedGroupId);
+      if (grp) {
+        const removedHolding = grp.holdings[idx];
+        const removedAssetId = removedHolding ? (removedHolding.assetId || 'BIST:' + removedHolding.symbol) : null;
+        grp.holdings.splice(idx, 1);
+        if (removedAssetId) {
+          removeAssetFromFavsIfNotInAnyGroup(removedAssetId, groups);
+        }
+        saveUserGroups(groups, true);
+        showToast('Hisse gruptan çıkarıldı');
+      }
+    };
+
+    window.openGroupSheet = function(assetId) {
+      const groups = getUserGroups();
+      if (groups.length === 0) {
+        showToast('Önce Gruplar sekmesinden bir grup oluşturun');
+        return;
+      }
+      const st = allAssetsMap.get(assetId);
+      modalTargetId = assetId;
+      document.getElementById('sheet-stock-symbol').textContent = st ? `${st.symbol} (${st.market === 'BIST' ? 'BIST' : 'ABD'})` : assetId;
+      const sel = document.getElementById('sheet-group-select');
+      sel.innerHTML = groups.map(g => `<option value="${g.id}" ${g.id === uiState.selectedGroupId ? 'selected' : ''}>${g.name}</option>`).join('');
+      document.getElementById('quick-group-sheet').classList.add('open');
+    };
+
+    document.getElementById('close-sheet-btn').addEventListener('click', () => {
+      document.getElementById('quick-group-sheet').classList.remove('open');
+    });
+
+    document.getElementById('quick-group-sheet').addEventListener('click', (e) => {
+      if (e.target.id === 'quick-group-sheet') document.getElementById('quick-group-sheet').classList.remove('open');
+    });
+
+    document.getElementById('sheet-confirm-btn').addEventListener('click', () => {
+      const grpId = document.getElementById('sheet-group-select').value;
+      const w = parseDecimalInput(document.getElementById('sheet-weight-input').value) || 0;
+      const groups = getUserGroups();
+      const grp = groups.find(g => g.id === grpId);
+      const st = allAssetsMap.get(modalTargetId);
+      if (grp && modalTargetId && st) {
+        const ex = grp.holdings.find(h => (h.assetId || 'BIST:' + h.symbol) === modalTargetId);
+        if (ex) ex.weight = w;
+        else grp.holdings.push({ assetId: modalTargetId, symbol: st.symbol, weight: w });
+        ensureGroupHoldingsAreFavorites(groups);
+        saveUserGroups(groups, true);
+        showToast(`${st.symbol} -> ${grp.name} grubuna eklendi`);
+      }
+      document.getElementById('quick-group-sheet').classList.remove('open');
+    });
+
+    // =========================================================================
+    // 13. USER MANAGEMENT & BACKUP / RESTORE
+    // =========================================================================
+    function renderUsersSection() {
+      const users = getUsers();
+      const sel = document.getElementById('update-pass-user-select');
+      sel.innerHTML = users.map(u => `<option value="${u.username}" ${u.username === currentUser ? 'selected' : ''}>${u.username} (${u.role})</option>`).join('');
+
+      const listEl = document.getElementById('users-list-container');
+      listEl.innerHTML = users.map(u => `
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:10px; margin-bottom:8px;">
+          <div>
+            <strong style="font-size:14px;">${u.username}</strong>
+            <span style="font-size:11.5px; color:var(--text-secondary); margin-left:6px;">(${u.role})</span>
+            ${u.username === currentUser ? '<div style="font-size:11px; color:var(--green);">● Aktif Oturum</div>' : ''}
+          </div>
+          ${users.length > 1
+            ? `<button class="btn btn-danger btn-sm" onclick="deleteUser('${u.username}')">Sil</button>`
+            : '<span style="font-size:11px; color:var(--text-muted);">Ana Kullanıcı</span>'}
+        </div>
+      `).join('');
+    }
+
+    document.getElementById('add-user-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const uname = document.getElementById('new-user-name').value.trim();
+      const pass = document.getElementById('new-user-pass').value;
+      const role = document.getElementById('new-user-role').value;
+      if (!uname || !pass) return;
+      const users = getUsers();
+      if (users.some(u => u.username.toLowerCase() === uname.toLowerCase())) {
+        showToast('Bu kullanıcı adı zaten var!');
+        return;
+      }
+      users.push({ username: uname, password: pass, role, createdAt: new Date().toLocaleDateString('tr-TR') });
+      saveUsers(users);
+      document.getElementById('new-user-name').value = '';
+      document.getElementById('new-user-pass').value = '';
+      showToast(`"${uname}" kullanıcısı eklendi`);
+    });
+
+    document.getElementById('update-pass-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const target = document.getElementById('update-pass-user-select').value;
+      const p1 = document.getElementById('update-pass-new').value;
+      const p2 = document.getElementById('update-pass-confirm').value;
+      if (p1 !== p2) {
+        showToast('Şifreler eşleşmiyor!');
+        return;
+      }
+      const users = getUsers();
+      const u = users.find(x => x.username === target);
+      if (u) {
+        u.password = p1;
+        saveUsers(users);
+        document.getElementById('update-pass-new').value = '';
+        document.getElementById('update-pass-confirm').value = '';
+        showToast(`"${target}" şifresi güncellendi`);
+      }
+    });
+
+    window.deleteUser = function(username) {
+      let users = getUsers();
+      if (users.length <= 1) return;
+      users = users.filter(u => u.username !== username);
+      saveUsers(users);
+      showToast(`"${username}" silindi`);
+    };
+
+    document.getElementById('export-backup-btn').addEventListener('click', () => {
+      const backupData = {
+        users: getUsers(),
+        favorites: getUserFavorites(),
+        groups: getUserGroups(),
+        manualOverrides: getManualOverrides(),
+        uiState,
+        exportedAt: new Date().toISOString()
+      };
+      const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `BIST_ABD_Yedek_${currentUser}_${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Yedek dosyası indirildi');
+    });
+
+    document.getElementById('import-backup-input').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        try {
+          const parsed = JSON.parse(ev.target.result);
+          if (Array.isArray(parsed.users)) saveUsers(parsed.users);
+          if (Array.isArray(parsed.favorites)) saveUserFavorites(parsed.favorites);
+          if (Array.isArray(parsed.groups)) saveUserGroups(parsed.groups, true);
+          if (parsed.manualOverrides) saveManualOverrides(parsed.manualOverrides);
+          if (parsed.uiState) {
+            uiState = { ...uiState, ...parsed.uiState };
+            saveUserUiState();
+            applySavedUiState();
+          }
+          initAllDataFromStorage();
+          renderHomeView();
+          renderBistView();
+          renderUsView();
+          renderGroupsView(true);
+          showToast('Yedek başarıyla geri yüklendi');
+        } catch (err) {
+          showToast('Geçersiz yedek dosyası');
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    // =========================================================================
+    // 14. NAVIGATION & AUTO-RESUME
+    // =========================================================================
+    window.switchTab = function(tabId, persist = true) {
+      document.querySelectorAll('.nav-item').forEach(btn => {
+        const isMatch = btn.dataset.tab === tabId;
+        btn.classList.toggle('active', isMatch);
+        if (isMatch) {
+          document.getElementById('page-title').textContent = btn.dataset.title;
+        }
+      });
+      document.querySelectorAll('.tab-view').forEach(view => {
+        view.classList.toggle('active', view.id === tabId);
+      });
+      uiState.activeTab = tabId;
+      if (tabId === 'tab-group-contents') renderGroupContentsView();
+      if (persist) {
+        saveUserUiState();
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }
+    };
+
+    document.querySelectorAll('.nav-item').forEach(btn => {
+      btn.addEventListener('click', () => switchTab(btn.dataset.tab, true));
+    });
+
+    getUsers();
+    const rememberedUser = localStorage.getItem(KEYS.ACTIVE_USER);
+    if (rememberedUser && getUsers().some(u => u.username === rememberedUser)) {
+      enterApp(rememberedUser);
+    }
+  </script>
+</body>
+</html>
